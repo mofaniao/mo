@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+
+<!-- Mirrored from dumima.com/a/shi-yong-iptables-fang-huo-qiang-ju-jue-guo-wai-IP-ping-bi-guo-wai-IP-fang-wen-fu-wu-qi.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset='utf-8'>
+	<meta name="robots" content="ALL">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="keywords" content="毒密码,dumima,毒密码的个人博客,dumima&#039;s blog">
+	<meta name="description" content="我们都是宇宙的孩子，与植物、星辰都一样...">
+	<link rel="stylesheet" href="../static/style/dumima.css" />
+	<link rel="stylesheet" href="../static/style/markdown.css" />
+	<link rel="shortcut icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+	<link rel="icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+    <title>毒密码</title>
+</head>
+<body style="background-image: url(../static/background/66078b154a276.jpg);">
+    <header class="header cl">
+        <div class="logo fl">
+            <div class="logo-title">毒密码</div>
+            <div class="logo-describe">我们都是宇宙的孩子，与植物、星辰都一样...</div>
+        </div>
+        <nav class="nav fr">
+            <ul class="cl">
+                <li class="nav-item"><a  href="../index.html" title="首页">首页</a></li>
+                                <li class="nav-item"><a  class="on" href="../c/jishu.html" title="技术">技术</a></li>
+                                <li class="nav-item"><a  href="../c/dushu.html" title="读书">读书</a></li>
+                                <li class="nav-item"><a  href="../c/suibi.html" title="随笔">随笔</a></li>
+                                <li class="nav-item"><a  href="../c/fenxiang.html" title="分享">分享</a></li>
+                                            </ul>
+        </nav>
+    </header>
+    <article class="article w">
+                <header class="article-header">
+            <h2 class="article-title">使用iptables防火墙拒绝国外IP/屏蔽国外IP访问服务器</h2>
+        </header>
+        <footer class="article-footer">
+            <span>归档：技术</span>
+            <span>时间：2024-03-26 13:18:03</span>
+            <span>阅读：11125</span>
+            <span>喜欢：6256</span>
+            <span>转发：5861</span>
+            <span>评论：7</span>
+        </footer>
+        <section class="article-content markdown-body">
+            <ol>
+<li>下载IP地址段文件
+访问网址 <a href="http://www.ipdeny.com/ipblocks/data/countries/cn.zone">http://www.ipdeny.com/ipblocks/data/countries/cn.zone</a> ，另存为国内IP地址段，然后将文件上传到服务器；
+也可以直接在服务器上执行如下命令直接下载文件到服务器：</li>
+</ol>
+<pre><code>wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone</code></pre>
+<ol start="2">
+<li>使用以下脚本将cn.zone中的IP地址添加到iptables规则中：</li>
+</ol>
+<pre><code class="language-bash">#!/bin/bash
+# 清空已有规则
+iptables -F
+iptables -X
+
+# 设置默认策略为拒绝所有入站流量
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+
+# 设置默认策略为允许所有出站流量
+iptables -P OUTPUT ACCEPT
+
+# 允许来自本地回环接口的数据包
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+# 允许已建立的连接和相关数据包通过
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# 读取 cn.zone 文件，将其中的 IP 地址添加到防火墙规则中
+while read ip; do
+  iptables -A INPUT -s $ip -j ACCEPT
+done &lt; cn.zone
+
+# 保存 iptables 规则
+iptables-save &gt; /etc/iptables/rules.v4</code></pre>
+<ol start="3">
+<li>运行脚本，将IP地址添加到iptables规则中：</li>
+</ol>
+<pre><code class="language-bash">chmod +x add_blocked_ips.sh
+./add_blocked_ips.sh</code></pre>
+<ol start="4">
+<li>重启iptables服务以应用新规则：</li>
+</ol>
+<pre><code class="language-bash">service iptables restart</code></pre>
+<ol start="5">
+<li>
+<p>要在每次重启服务器时自动运行上述规则，你可以将脚本添加到系统的启动脚本中。</p>
+<ul>
+<li>
+<p>创建一个名为 <code>iptables_china.sh</code> 的文件，并将上述脚本内容复制到其中。</p>
+</li>
+<li>
+<p>使用文本编辑器打开 <code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 文件（假设你使用的是 eth0 网络接口，如果不是，请替换为正确的接口名称）。</p>
+</li>
+<li>
+<p>在 <code>ONBOOT</code> 参数后面添加以下行，以在网络接口启动之前运行脚本：</p>
+<pre><code class="language-bash">pre-up /path/to/iptables_china.sh</code></pre>
+</li>
+<li>
+<p>保存并关闭文件。</p>
+</li>
+<li>
+<p>为脚本添加可执行权限：</p>
+<pre><code class="language-bash">chmod +x /path/to/iptables_china.sh</code></pre>
+</li>
+<li>
+<p>重启网络服务或重启服务器以应用更改：</p>
+<pre><code class="language-bash">systemctl restart network
+# 或者
+reboot</code></pre>
+</li>
+</ul>
+</li>
+</ol>        </section>
+            </article>
+    <script>
+        var elements = document.querySelectorAll('.markdown-body a');
+        elements.forEach(function(element) {
+            element.setAttribute('target', '_blank');
+        });
+    </script>
+<footer class="footer">
+    <span>&copy;2024 <a href="../index.html">毒密码</a></span>
+    <span><a href="https://beian.miit.gov.cn/">蜀ICP备14031151号-7</a></span>
+</footer>
+</body>
+
+<!-- Mirrored from dumima.com/a/shi-yong-iptables-fang-huo-qiang-ju-jue-guo-wai-IP-ping-bi-guo-wai-IP-fang-wen-fu-wu-qi.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:05 GMT -->
+</html>

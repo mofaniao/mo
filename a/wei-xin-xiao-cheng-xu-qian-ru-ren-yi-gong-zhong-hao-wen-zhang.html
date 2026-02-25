@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+
+<!-- Mirrored from dumima.com/a/wei-xin-xiao-cheng-xu-qian-ru-ren-yi-gong-zhong-hao-wen-zhang.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset='utf-8'>
+	<meta name="robots" content="ALL">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="keywords" content="毒密码,dumima,毒密码的个人博客,dumima&#039;s blog">
+	<meta name="description" content="我们都是宇宙的孩子，与植物、星辰都一样...">
+	<link rel="stylesheet" href="../static/style/dumima.css" />
+	<link rel="stylesheet" href="../static/style/markdown.css" />
+	<link rel="shortcut icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+	<link rel="icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+    <title>毒密码</title>
+</head>
+<body style="background-image: url(../static/background/66078b154a276.jpg);">
+    <header class="header cl">
+        <div class="logo fl">
+            <div class="logo-title">毒密码</div>
+            <div class="logo-describe">我们都是宇宙的孩子，与植物、星辰都一样...</div>
+        </div>
+        <nav class="nav fr">
+            <ul class="cl">
+                <li class="nav-item"><a  href="../index.html" title="首页">首页</a></li>
+                                <li class="nav-item"><a  class="on" href="../c/jishu.html" title="技术">技术</a></li>
+                                <li class="nav-item"><a  href="../c/dushu.html" title="读书">读书</a></li>
+                                <li class="nav-item"><a  href="../c/suibi.html" title="随笔">随笔</a></li>
+                                <li class="nav-item"><a  href="../c/fenxiang.html" title="分享">分享</a></li>
+                                            </ul>
+        </nav>
+    </header>
+    <article class="article w">
+                <header class="article-header">
+            <h2 class="article-title">微信小程序嵌入任意公众号文章</h2>
+        </header>
+        <footer class="article-footer">
+            <span>归档：技术</span>
+            <span>时间：2024-04-18 09:17:04</span>
+            <span>阅读：11848</span>
+            <span>喜欢：4459</span>
+            <span>转发：3545</span>
+            <span>评论：7</span>
+        </footer>
+        <section class="article-content markdown-body">
+            <h3 id="h3-u80CCu666F"><a name="背景" class="reference-link"></a><span class="header-link octicon octicon-link"></span>背景</h3><p>小程序可以使用 webview 组件来嵌入 web 内容，对于常规域名需要通过域名所有权认证，对于微信公众号文章需要发布公众号与小程序关联，这在部分情况下是无法实现的（显示非自有公众号文章）。</p>
+<p>所以，我们需要一个中间人来帮我们实现这个功能。</p>
+<h3 id="h3-u5B9Eu73B0u601Du8DEF"><a name="实现思路" class="reference-link"></a><span class="header-link octicon octicon-link"></span>实现思路</h3><p>当然就是实现一个反向代理了，能够反代 mp.weixin.qq.com 的内容。</p>
+<h3 id="h3-u5B9Eu73B0u65B9u6CD5"><a name="实现方法" class="reference-link"></a><span class="header-link octicon octicon-link"></span>实现方法</h3><p>因为需求比较简单，还不至于到写代码的地步，用 nginx 实现就好。</p>
+<pre><code class="lang-nginx">server
+    {
+        server_name mp-proxy.example.com;
+
+        # listen block
+
+        location /
+        {
+            proxy_pass https://mp.weixin.qq.com/;
+        }
+    }
+</code></pre>
+<p>然后访问一下就会有靓仔发现，我这个图片怎么显示不出来呢。</p>
+<p>通过 network 可以看到图片请求由于 cors 限制导致失败，但是为什么普通的 GET 请求会被 cors 限制呢？</p>
+<p>通过 initiator 观察可以看到请求是为了实现懒加载由 script 动态插入的<code>&lt;img&gt;</code>标签发出的。那么问题就来了，为什么这个 <code>&lt;img&gt;</code>需要 cors 检查？</p>
+<p>这里就需要一些简单的前端知识，mdn，在跨域条件下，默认 <code>&lt;img&gt;</code>加载的图片资源会被认为是 tainted 的，除非为 <code>&lt;img&gt;</code>加上 crossorigin 属性，会在请求中要求 cors 检查，并在浏览器进行 cors 校验。</p>
+<p>在公众号文章场景下，并不存在需要 canvas 的场景，所以我们可以将 crossorigin 属性移除，以此来绕开 cors 限制。这里可以通过在 source 中搜索，将所有 crossOrigin 搜索出来，进行替换（主要就是几处 js）。</p>
+<p>然后将 html js link 指向 nginx，在 nginx 对 js 内容进行替换，顺便去掉所有的 referrer。</p>
+<p>注意如果需要替换内容，需要禁止 gzip 等压缩，否则内容无法被替换。</p>
+<h3 id="h3-u6700u7EC8u5B9Eu73B0"><a name="最终实现" class="reference-link"></a><span class="header-link octicon octicon-link"></span>最终实现</h3><pre><code class="lang-nginx">server
+    {
+        server_name mp-proxy.weshine.club;
+        include weshine.ssl;
+
+        location /s/
+        {
+            add_header Referrer-Policy no-referrer;
+            sub_filter &#39;origin-when-cross-origin&#39; &#39;no-referrer&#39;;
+            sub_filter &#39;strict-origin-when-cross-origin&#39; &#39;no-referrer&#39;;
+            sub_filter &#39;crossorigin=&quot;anonymous&quot;&#39; &#39;&#39;;
+            sub_filter &#39;res.wx.qq.com/mmbizappmsg/zh_CN/htmledition/js/assets/weui&#39; mp-proxy.weshine.club/ass/weui;
+            sub_filter &#39;res.wx.qq.com/mmbizappmsg/zh_CN/htmledition/js/assets/appmsg.&#39; mp-proxy.weshine.club/ass/appmsg.;
+            proxy_set_header Accept-Encoding &#39;&#39;;
+            proxy_pass https://mp.weixin.qq.com/s/;
+        }
+        location /mp/
+        {
+            proxy_pass https://mp.weixin.qq.com/mp/;
+        }
+
+        location /ass
+        {
+            sub_filter &#39;s.setAttribute(&quot;crossOrigin&quot;,&quot;Anonymous&quot;)&#39; &#39;1&#39;;
+            sub_filter &#39;e.crossOrigin=&quot;anonymous&quot;&#39; &#39;1&#39;;
+            sub_filter &#39;t.crossOrigin=&quot;anonymous&quot;&#39; &#39;1&#39;;
+            sub_filter_types &#39;application/x-javascript&#39;;
+            sub_filter_once off;
+            proxy_set_header Accept-Encoding &#39;&#39;;
+            proxy_pass https://res.wx.qq.com/mmbizappmsg/zh_CN/htmledition/js/assets;
+            proxy_buffering        on;
+            proxy_cache            mp_proxy;
+            proxy_cache_valid      200  1d;
+        }
+    }
+</code></pre>
+<p>这样就完工了。当然还有部分优化点，比如部分 js 文件过大，可以只留下需要的 js，其他的内容全部 302 出去。这里就不展开了。</p>        </section>
+            </article>
+    <script>
+        var elements = document.querySelectorAll('.markdown-body a');
+        elements.forEach(function(element) {
+            element.setAttribute('target', '_blank');
+        });
+    </script>
+<footer class="footer">
+    <span>&copy;2024 <a href="../index.html">毒密码</a></span>
+    <span><a href="https://beian.miit.gov.cn/">蜀ICP备14031151号-7</a></span>
+</footer>
+</body>
+
+<!-- Mirrored from dumima.com/a/wei-xin-xiao-cheng-xu-qian-ru-ren-yi-gong-zhong-hao-wen-zhang.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:05 GMT -->
+</html>

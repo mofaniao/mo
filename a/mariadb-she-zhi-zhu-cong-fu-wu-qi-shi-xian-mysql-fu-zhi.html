@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+
+<!-- Mirrored from dumima.com/a/mariadb-she-zhi-zhu-cong-fu-wu-qi-shi-xian-mysql-fu-zhi.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset='utf-8'>
+	<meta name="robots" content="ALL">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="keywords" content="毒密码,dumima,毒密码的个人博客,dumima&#039;s blog">
+	<meta name="description" content="我们都是宇宙的孩子，与植物、星辰都一样...">
+	<link rel="stylesheet" href="../static/style/dumima.css" />
+	<link rel="stylesheet" href="../static/style/markdown.css" />
+	<link rel="shortcut icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+	<link rel="icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+    <title>毒密码</title>
+</head>
+<body style="background-image: url(../static/background/66078b154a276.jpg);">
+    <header class="header cl">
+        <div class="logo fl">
+            <div class="logo-title">毒密码</div>
+            <div class="logo-describe">我们都是宇宙的孩子，与植物、星辰都一样...</div>
+        </div>
+        <nav class="nav fr">
+            <ul class="cl">
+                <li class="nav-item"><a  href="../index.html" title="首页">首页</a></li>
+                                <li class="nav-item"><a  class="on" href="../c/jishu.html" title="技术">技术</a></li>
+                                <li class="nav-item"><a  href="../c/dushu.html" title="读书">读书</a></li>
+                                <li class="nav-item"><a  href="../c/suibi.html" title="随笔">随笔</a></li>
+                                <li class="nav-item"><a  href="../c/fenxiang.html" title="分享">分享</a></li>
+                                            </ul>
+        </nav>
+    </header>
+    <article class="article w">
+                <header class="article-header">
+            <h2 class="article-title">MariaDB设置主从服务器实现MySQL复制</h2>
+        </header>
+        <footer class="article-footer">
+            <span>归档：技术</span>
+            <span>时间：2024-03-07 10:43:03</span>
+            <span>阅读：13104</span>
+            <span>喜欢：1896</span>
+            <span>转发：2792</span>
+            <span>评论：0</span>
+        </footer>
+        <section class="article-content markdown-body">
+            <p>MariaDB设置主从服务器实现MySQL复制的步骤如下：</p>
+<ol>
+<li><strong>安装MariaDB</strong>：</li>
+</ol>
+<ul>
+<li>
+<p>在两台服务器上分别安装MariaDB。可以使用包管理器如yum进行安装，命令为<code>sudo yum install mariadb-server</code>。</p>
+</li>
+<li>
+<p>安装完成后，启动MariaDB服务，并设置开机自动启动，使用命令<code>sudo systemctl start mariadb</code>和<code>sudo systemctl enable mariadb</code>。</p>
+</li>
+<li>
+<p>运行安全配置脚本<code>mysql_secure_installation</code>来设置初始密码等安全措施。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>配置主服务器（Master）</strong>：</li>
+</ol>
+<ul>
+<li>
+<p>编辑MariaDB的配置文件<code>my.cnf</code>，通常位于<code>/etc/my.cnf</code>或<code>/etc/mysql/my.cnf</code>，在<code>[mysqld]</code>部分添加以下内容：</p>
+<ul>
+<li>
+<p><code>server_id=1</code>：设置服务器的唯一ID。</p>
+</li>
+<li>
+<p><code>log_bin=mysql-bin</code>：开启二进制日志功能，用于记录所有修改数据的语句。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>重启MariaDB服务以应用配置更改。</p>
+</li>
+<li>
+<p>授权从服务器（Slave）访问主服务器的二进制日志文件。在主服务器上执行以下SQL命令：</p>
+<pre><code class="language-sql">GRANT REPLICATION SLAVE ON *.* TO 'slave_user'@'%' IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;</code></pre>
+</li>
+<li>
+<p>查看主服务器的状态，记录<code>File</code>和<code>Position</code>的值，从服务器将需要这些值来同步数据：</p>
+<pre><code class="language-sql">SHOW MASTER STATUS;</code></pre>
+</li>
+</ul>
+<ol start="3">
+<li><strong>配置从服务器（Slave）</strong>：</li>
+</ol>
+<ul>
+<li>
+<p>同样需要编辑从服务器上的MariaDB配置文件<code>my.cnf</code>，在<code>[mysqld]</code>部分添加以下内容：</p>
+<ul>
+<li>
+<p><code>server_id=2</code>：设置一个与主服务器不同的唯一ID。</p>
+</li>
+<li>
+<p><code>relay_log_index=relay-bin.index</code>：设置中继日志索引文件的名称。</p>
+</li>
+<li>
+<p><code>relay_log=relay-bin</code>：设置中继日志文件的名称。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>重启MariaDB服务以应用配置更改。</p>
+</li>
+<li>
+<p>在从服务器上，使用<code>CHANGE MASTER TO</code>命令来设置主服务器的信息：</p>
+<pre><code class="language-sql">CHANGE MASTER TO
+MASTER_HOST='master_ip_address',
+MASTER_USER='slave_user',
+MASTER_PASSWORD='password',
+MASTER_LOG_FILE='file_name',
+MASTER_LOG_POS=position_number;</code></pre>
+</li>
+<li>
+<p>开启从服务器的复制功能：</p>
+<pre><code class="language-sql">START SLAVE;</code></pre>
+</li>
+<li>
+<p>检查从服务器的复制状态，确保一切正常：</p>
+<pre><code class="language-sql">SHOW SLAVE STATUS\G;</code></pre>
+</li>
+</ul>
+<p>以上步骤是设置MariaDB主从复制的基本流程。在实际操作中，可能还需要根据具体的服务器环境和需求进行一些额外的配置和调整。此外，为了确保数据一致性和复制的稳定性，建议在正式环境中实施之前，先在测试环境中进行充分的测试。</p>        </section>
+            </article>
+    <script>
+        var elements = document.querySelectorAll('.markdown-body a');
+        elements.forEach(function(element) {
+            element.setAttribute('target', '_blank');
+        });
+    </script>
+<footer class="footer">
+    <span>&copy;2024 <a href="../index.html">毒密码</a></span>
+    <span><a href="https://beian.miit.gov.cn/">蜀ICP备14031151号-7</a></span>
+</footer>
+</body>
+
+<!-- Mirrored from dumima.com/a/mariadb-she-zhi-zhu-cong-fu-wu-qi-shi-xian-mysql-fu-zhi.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:06 GMT -->
+</html>

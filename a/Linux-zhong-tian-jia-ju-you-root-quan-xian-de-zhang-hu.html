@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+
+<!-- Mirrored from dumima.com/a/Linux-zhong-tian-jia-ju-you-root-quan-xian-de-zhang-hu.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:48:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset='utf-8'>
+	<meta name="robots" content="ALL">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="keywords" content="毒密码,dumima,毒密码的个人博客,dumima&#039;s blog">
+	<meta name="description" content="我们都是宇宙的孩子，与植物、星辰都一样...">
+	<link rel="stylesheet" href="../static/style/dumima.css" />
+	<link rel="stylesheet" href="../static/style/markdown.css" />
+	<link rel="shortcut icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+	<link rel="icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+    <title>毒密码</title>
+</head>
+<body style="background-image: url(../static/background/66078b154a276.jpg);">
+    <header class="header cl">
+        <div class="logo fl">
+            <div class="logo-title">毒密码</div>
+            <div class="logo-describe">我们都是宇宙的孩子，与植物、星辰都一样...</div>
+        </div>
+        <nav class="nav fr">
+            <ul class="cl">
+                <li class="nav-item"><a  href="../index.html" title="首页">首页</a></li>
+                                <li class="nav-item"><a  class="on" href="../c/jishu.html" title="技术">技术</a></li>
+                                <li class="nav-item"><a  href="../c/dushu.html" title="读书">读书</a></li>
+                                <li class="nav-item"><a  href="../c/suibi.html" title="随笔">随笔</a></li>
+                                <li class="nav-item"><a  href="../c/fenxiang.html" title="分享">分享</a></li>
+                                            </ul>
+        </nav>
+    </header>
+    <article class="article w">
+                <header class="article-header">
+            <h2 class="article-title">Linux中添加具有root权限的账户</h2>
+        </header>
+        <footer class="article-footer">
+            <span>归档：技术</span>
+            <span>时间：2011-02-27 00:19:02</span>
+            <span>阅读：24374</span>
+            <span>喜欢：6221</span>
+            <span>转发：5400</span>
+            <span>评论：6</span>
+        </footer>
+        <section class="article-content markdown-body">
+            <p>要在Linux中添加一个具有root权限的账户，可以按照以下步骤进行操作：</p>
+<p>1、打开终端或SSH连接到目标Linux系统。</p>
+<p>2、使用root用户登录或使用sudo命令获取root权限。</p>
+<p>3、运行以下命令创建一个新的用户账户（将username替换为您想要的用户名）：</p>
+<pre><code>sudo adduser username</code></pre>
+<p>4、输入新用户的密码并确认。</p>
+<p>5、为新用户设置root权限，运行以下命令：</p>
+<pre><code>sudo usermod -aG sudo username</code></pre>
+<p>6、现在，新用户已经拥有了与root相同的权限。要验证这一点，请使用新用户登录并尝试执行需要root权限的命令，例如：</p>
+<pre><code>sudo su -</code></pre>
+<p>如果成功切换到root用户，则表示新用户已获得与root相同的权限。</p>
+<p>请注意，在Linux系统中，具有root权限的用户应该谨慎使用，因为错误的操作可能导致系统损坏或安全风险。确保仅授权给可信任的用户，并遵循最佳实践来保护系统的安全性。</p>        </section>
+            </article>
+    <script>
+        var elements = document.querySelectorAll('.markdown-body a');
+        elements.forEach(function(element) {
+            element.setAttribute('target', '_blank');
+        });
+    </script>
+<footer class="footer">
+    <span>&copy;2024 <a href="../index.html">毒密码</a></span>
+    <span><a href="https://beian.miit.gov.cn/">蜀ICP备14031151号-7</a></span>
+</footer>
+</body>
+
+<!-- Mirrored from dumima.com/a/Linux-zhong-tian-jia-ju-you-root-quan-xian-de-zhang-hu.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:48:17 GMT -->
+</html>

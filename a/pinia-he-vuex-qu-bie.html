@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+
+<!-- Mirrored from dumima.com/a/pinia-he-vuex-qu-bie.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset='utf-8'>
+	<meta name="robots" content="ALL">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="keywords" content="毒密码,dumima,毒密码的个人博客,dumima&#039;s blog">
+	<meta name="description" content="我们都是宇宙的孩子，与植物、星辰都一样...">
+	<link rel="stylesheet" href="../static/style/dumima.css" />
+	<link rel="stylesheet" href="../static/style/markdown.css" />
+	<link rel="shortcut icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+	<link rel="icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+    <title>毒密码</title>
+</head>
+<body style="background-image: url(../static/background/66078b154a276.jpg);">
+    <header class="header cl">
+        <div class="logo fl">
+            <div class="logo-title">毒密码</div>
+            <div class="logo-describe">我们都是宇宙的孩子，与植物、星辰都一样...</div>
+        </div>
+        <nav class="nav fr">
+            <ul class="cl">
+                <li class="nav-item"><a  href="../index.html" title="首页">首页</a></li>
+                                <li class="nav-item"><a  class="on" href="../c/jishu.html" title="技术">技术</a></li>
+                                <li class="nav-item"><a  href="../c/dushu.html" title="读书">读书</a></li>
+                                <li class="nav-item"><a  href="../c/suibi.html" title="随笔">随笔</a></li>
+                                <li class="nav-item"><a  href="../c/fenxiang.html" title="分享">分享</a></li>
+                                            </ul>
+        </nav>
+    </header>
+    <article class="article w">
+                <header class="article-header">
+            <h2 class="article-title">pinia和vuex区别</h2>
+        </header>
+        <footer class="article-footer">
+            <span>归档：技术</span>
+            <span>时间：2024-03-22 13:00:03</span>
+            <span>阅读：6546</span>
+            <span>喜欢：5545</span>
+            <span>转发：9634</span>
+            <span>评论：2</span>
+        </footer>
+        <section class="article-content markdown-body">
+            <p>Pinia和Vuex都是Vue.js应用的状态管理库，但它们在设计理念、使用方式以及API设计方面存在一些区别。以下是详细的对比：</p>
+<ol>
+<li>
+<p><strong>设计理念</strong>：</p>
+<ul>
+<li>
+<p>Pinia是Vue团队推荐的全新状态管理库，支持Vue 2和Vue 3。它不依赖于全局对象，而是通过创建独立的store实例来管理状态。</p>
+</li>
+<li>
+<p>Vuex是老牌的状态管理库，同样支持Vue 2和Vue 3。它使用Redux架构，提供了全局的state、getters、mutations和actions等概念。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>使用方式</strong>：</p>
+<ul>
+<li>
+<p>Pinia的API设计简洁，没有mutation的概念，只有state、getters和actions（同步或异步）来修改state数据。它默认将状态存储在内存中，如果需要使用本地存储，配置上可能比Vuex麻烦一些。</p>
+</li>
+<li>
+<p>Vuex的使用则更加灵活，用户可以根据需要自定义模块和组织代码。它提供了modules配置，允许开发者以模块化的方式来组织状态管理逻辑。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>API设计</strong>：</p>
+<ul>
+<li>
+<p>Pinia有更好的TypeScript支持和模块热更新的特性。它的语法相对Vuex来说更容易理解和使用，更加灵活。</p>
+</li>
+<li>
+<p>Vuex拥有SSR和Vue DevTools的支持，这对于调试和开发大型应用非常有帮助。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，Pinia作为新兴的状态管理库，以其简洁的API设计和对Vue 3的原生支持而受到关注。而Vuex作为一个成熟的解决方案，因其稳定性和灵活性在许多大型项目中得到了广泛应用。在实际项目中选择哪一个，需要根据项目的具体需求和团队的技术栈来决定。</p>        </section>
+            </article>
+    <script>
+        var elements = document.querySelectorAll('.markdown-body a');
+        elements.forEach(function(element) {
+            element.setAttribute('target', '_blank');
+        });
+    </script>
+<footer class="footer">
+    <span>&copy;2024 <a href="../index.html">毒密码</a></span>
+    <span><a href="https://beian.miit.gov.cn/">蜀ICP备14031151号-7</a></span>
+</footer>
+</body>
+
+<!-- Mirrored from dumima.com/a/pinia-he-vuex-qu-bie.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:05 GMT -->
+</html>
