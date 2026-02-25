@@ -1,0 +1,236 @@
+/************************
+*****    $common    *****
+*************************/
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, button, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, input, ins, kbd, label, legend, li, mark, menu, nav, object, ol, p, pre, q, s, samp, section, small, span, strike, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline
+}
+body, div, fieldset, form, h1, h2, h3, h4, h5, h6, html, p {
+    -webkit-text-size-adjust: none
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block
+}
+html, body {
+    min-width: 1024px;
+}
+body {
+    font: 200 1em/2em \5FAE\8F6F\96C5\9ED1, Arial;
+    color: rgb(30, 30, 30);
+    background: rgb(0, 0, 0) no-repeat fixed;
+    background-size: cover;
+    box-sizing: border-box;
+    -moz-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out
+}
+ul {
+    list-style: none;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-padding-start: 0
+}
+a, .a:hover {
+    text-decoration: none;
+    -moz-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out
+}
+a:hover, .a {
+    cursor: pointer;
+}
+.fl {
+    float: left !important
+}
+.fr {
+    float: right !important
+}
+.cl:after, .cl:before {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden
+}
+.cl:after {
+    clear: both
+}
+.cl {
+    zoom: 1
+}
+.wf {
+    width: 100%
+}
+
+/************************
+*****    $header    *****
+*************************/
+.header{
+    margin: 0 auto;
+    width: 990px;
+}
+.header .logo{
+    margin-top: 40px;
+    margin-left: 20px;
+    color: hsl(37, 88%, 59%);
+}
+.header .logo-title{
+    font-size: 1.5em;
+}
+.header .logo-describe{
+    line-height: 1.3em;
+    font-size: 0.6875em;
+}
+
+/************************
+*****     $nav      *****
+*************************/
+.nav {
+    display: block;
+    margin-top: 50px;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.nav-item {
+    float: left;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+.nav-item > a{
+    color: rgb(30, 30, 30);
+    display: block;
+}
+.nav-item > a:after,.nav-item:hover > .on:after{
+    display: block;
+    content: attr(title);
+    background-color: rgb(235, 235, 235);
+}
+.nav-item:hover > a:after{
+    background-color: rgb(245, 245, 245);
+}
+.nav-item > a:hover,.nav-item > .on{
+    margin-top: -40px;
+    color: rgb(132, 94, 32);
+}
+
+/************************
+*****    $banner    *****
+*************************/
+.banner{
+    margin: 20px auto 0;
+    width: 950px;
+    height: 330px;
+    background-color: rgb(237, 237, 237);
+    border-radius: 8px;
+    border: 20px solid rgb(255, 255, 255);
+}
+
+/************************
+*****     $list     *****
+*************************/
+.list{
+    margin: 20px auto;
+    padding: 20px;
+    width: 950px;
+    min-height: 300px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+}
+.item{
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    transition: all ease-in-out .3s
+}
+.item:last-child{
+    border-bottom: 0;
+}
+.item:hover{
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05)
+}
+
+/************************
+*****   $article    *****
+*************************/
+.article{
+    margin: 20px auto;
+    padding: 40px;
+    width: 910px;
+    min-height: 300px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+}
+.article-title,.article-title > a{
+    font-size: 1.375rem;
+    color: rgb(132, 94, 32);
+}
+.article-title > a:hover{
+    color: rgb(30, 30, 30);
+}
+.article-content{
+    font-size: 0.875em;
+}
+.article-content p{
+    margin-bottom: 10px;
+}
+.article-content p img{
+    max-width: 100%;
+}
+.article-footer{
+    font-size: 0.875em;
+    color: rgb(153, 153, 153);
+}
+.article-footer > span{
+    margin-right: 20px;
+}
+
+/************************
+*****  $pagination  *****
+*************************/
+.pagination{
+    margin-top: 20px;
+    text-align: center;
+    font-size: .875em;
+}
+.pagination a,.pagination span{
+    display: inline-block;
+    margin: 0 5px;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 50%;
+    color: rgb(0, 0, 0);
+}
+.pagination a:hover,.pagination span.active{
+    background-color: rgba(0, 0, 0, 0.618);
+    color: rgb(255, 255, 255);
+}
+
+/************************
+*****    $footer    *****
+*************************/
+.footer{
+    padding-bottom: 20px;
+    text-align: center;
+    color: rgba(132, 94, 32, 0.618);
+}
+.footer > span{
+    margin: 0 10px;
+}
+.footer a{
+    color: rgba(132, 94, 32, 0.618);
+}
+.footer a:hover{
+    color: rgb(255, 255, 255);
+}

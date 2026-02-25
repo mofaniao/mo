@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+
+<!-- Mirrored from dumima.com/a/shi-yong-vue-js-bu-shu-bo-ke-wang-zhan.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:06 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset='utf-8'>
+	<meta name="robots" content="ALL">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<meta name="keywords" content="毒密码,dumima,毒密码的个人博客,dumima&#039;s blog">
+	<meta name="description" content="我们都是宇宙的孩子，与植物、星辰都一样...">
+	<link rel="stylesheet" href="../static/style/dumima.css" />
+	<link rel="stylesheet" href="../static/style/markdown.css" />
+	<link rel="shortcut icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+	<link rel="icon" href="../static/logo/6606c90386fdd.png" type="image/x-icon">
+    <title>毒密码</title>
+</head>
+<body style="background-image: url(../static/background/66078b154a276.jpg);">
+    <header class="header cl">
+        <div class="logo fl">
+            <div class="logo-title">毒密码</div>
+            <div class="logo-describe">我们都是宇宙的孩子，与植物、星辰都一样...</div>
+        </div>
+        <nav class="nav fr">
+            <ul class="cl">
+                <li class="nav-item"><a  href="../index.html" title="首页">首页</a></li>
+                                <li class="nav-item"><a  class="on" href="../c/jishu.html" title="技术">技术</a></li>
+                                <li class="nav-item"><a  href="../c/dushu.html" title="读书">读书</a></li>
+                                <li class="nav-item"><a  href="../c/suibi.html" title="随笔">随笔</a></li>
+                                <li class="nav-item"><a  href="../c/fenxiang.html" title="分享">分享</a></li>
+                                            </ul>
+        </nav>
+    </header>
+    <article class="article w">
+                <header class="article-header">
+            <h2 class="article-title">使用Vue.js部署博客网站</h2>
+        </header>
+        <footer class="article-footer">
+            <span>归档：技术</span>
+            <span>时间：2024-03-06 15:00:03</span>
+            <span>阅读：13196</span>
+            <span>喜欢：4035</span>
+            <span>转发：9344</span>
+            <span>评论：4</span>
+        </footer>
+        <section class="article-content markdown-body">
+            <p>首先，需要安装 Vue CLI，然后使用它来创建一个 Vue 3 项目。在命令行中输入以下命令：</p>
+<pre><code class="language-bash">npm install -g @vue/cli
+vue create my-blog
+cd my-blog
+vue add router</code></pre>
+<p>接下来，修改 <code>src</code> 目录下的文件以实现博客站点的功能。</p>
+<ol>
+<li>在 <code>src</code> 目录下创建一个名为 <code>api</code> 的文件夹，然后在其中创建一个名为 <code>index.js</code> 的文件。在这个文件中，我们将定义一个函数来获取站点信息、文章分类导航和文章列表。</li>
+</ol>
+<pre><code class="language-javascript">// src/api/index.js
+import axios from 'axios';
+
+export async function getSiteInfo() {
+  const response = await axios.get('https://api.example.com/site-info');
+  return response.data;
+}
+
+export async function getCategories() {
+  const response = await axios.get('https://api.example.com/categories');
+  return response.data;
+}
+
+export async function getArticles(categoryId) {
+  const response = await axios.get(`https://api.example.com/articles?category=${categoryId}`);
+  return response.data;
+}</code></pre>
+<ol start="2">
+<li>修改 <code>src/App.vue</code> 文件，添加路由和组件。</li>
+</ol>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div id="app"&gt;
+    &lt;router-view&gt;&lt;/router-view&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import Home from './components/Home.vue';
+import Category from './components/Category.vue';
+import Article from './components/Article.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Home,
+    Category,
+    Article,
+  },
+};
+&lt;/script&gt;</code></pre>
+<ol start="3">
+<li>在 <code>src/router</code> 目录下的 <code>index.js</code> 文件中，添加路由配置。</li>
+</ol>
+<pre><code class="language-javascript">import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../views/Home.vue';
+import Category from '../views/Category.vue';
+import Article from '../views/Article.vue';
+
+const routes = [
+  {
+    path: '/',
+    redirect: '/home',
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '/category/:id',
+    name: 'Category',
+    component: Category,
+  },
+  {
+    path: '/article/:id',
+    name: 'Article',
+    component: Article,
+  },
+];
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+});
+
+export default router;</code></pre>
+<ol start="4">
+<li>创建 <code>src/components</code> 目录下的 <code>Home.vue</code>、<code>Category.vue</code> 和 <code>Article.vue</code> 文件，分别用于显示首页、文章分类页面和文章详情页面。在这些文件中，我们需要调用上面定义的 API 函数来获取数据，并将数据绑定到模板中。</li>
+</ol>
+<p><code>Home.vue</code>:</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;{{ siteInfo.title }}&lt;/h1&gt;
+    &lt;ul&gt;
+      &lt;li v-for="category in categories" :key="category.id"&gt;
+        &lt;router-link :to="{ name: 'Category', params: { id: category.id } }"&gt;{{ category.name }}&lt;/router-link&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul&gt;
+      &lt;li v-for="article in articles" :key="article.id"&gt;
+        &lt;router-link :to="{ name: 'Article', params: { id: article.id } }"&gt;{{ article.title }}&lt;/router-link&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { getSiteInfo, getCategories, getArticles } from '../api';
+
+export default {
+  data() {
+    return {
+      siteInfo: {},
+      categories: [],
+      articles: [],
+    };
+  },
+  async created() {
+    this.siteInfo = await getSiteInfo();
+    this.categories = await getCategories();
+    this.articles = await getArticles();
+  },
+};
+&lt;/script&gt;</code></pre>
+<p><code>Category.vue</code>:</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;{{ category.name }}&lt;/h1&gt;
+    &lt;ul&gt;
+      &lt;li v-for="article in articles" :key="article.id"&gt;
+        &lt;router-link :to="{ name: 'Article', params: { id: article.id } }"&gt;{{ article.title }}&lt;/router-link&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { getArticles } from '../api';
+
+export default {
+  data() {
+    return {
+      category: {},
+      articles: [],
+    };
+  },
+  async created() {
+    this.category = this.$route.params;
+    this.articles = await getArticles(this.category.id);
+  },
+};
+&lt;/script&gt;</code></pre>
+<p><code>Article.vue</code>:</p>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;div&gt;
+    &lt;h1&gt;{{ article.title }}&lt;/h1&gt;
+    &lt;p&gt;{{ article.content }}&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { getArticle } from '../api';
+
+export default {
+  data() {
+    return {
+      article: {},
+    };
+  },
+  async created() {
+    this.article = await getArticle(this.$route.params.id);
+  },
+};
+&lt;/script&gt;</code></pre>
+<p>现在，运行 <code>npm run serve</code> 来启动你的博客站点。请注意，你需要将上述代码中的 API URL 替换为实际的第三方 API URL。</p>        </section>
+            </article>
+    <script>
+        var elements = document.querySelectorAll('.markdown-body a');
+        elements.forEach(function(element) {
+            element.setAttribute('target', '_blank');
+        });
+    </script>
+<footer class="footer">
+    <span>&copy;2024 <a href="../index.html">毒密码</a></span>
+    <span><a href="https://beian.miit.gov.cn/">蜀ICP备14031151号-7</a></span>
+</footer>
+</body>
+
+<!-- Mirrored from dumima.com/a/shi-yong-vue-js-bu-shu-bo-ke-wang-zhan.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 03:46:06 GMT -->
+</html>
