@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>标签 - 墨 Mo · 极简博客</title>
+  <meta name="description" content="">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>墨</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <span class="logo-char">墨</span>
+          <span class="logo-en">Mo</span>
+        </a>
+        <nav class="nav">
+          <a href="/" class="nav-link">首页</a>
+          <a href="/archive.html" class="nav-link">归档</a>
+          <a href="/about.html" class="nav-link">关于</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- 标签列表模式 -->
+
+  <div class="tax-header">
+    <h2 class="tax-title">标签</h2>
+    <p class="tax-count">共 48 个标签</p>
+  </div>
+
+  <div class="tag-cloud">
+    <a
+       href="/t/ai-qing.html"
+       class="tag-item">
+      <span class="tag-name"># 爱情</span>
+      <span class="tag-count">22</span>
+    </a><a
+       href="/t/xiao-yuan.html"
+       class="tag-item">
+      <span class="tag-name"># 校园</span>
+      <span class="tag-count">21</span>
+    </a><a
+       href="/t/xiao-shuo.html"
+       class="tag-item">
+      <span class="tag-name"># 小说</span>
+      <span class="tag-count">13</span>
+    </a><a
+       href="/t/gu-shi.html"
+       class="tag-item">
+      <span class="tag-name"># 故事</span>
+      <span class="tag-count">12</span>
+    </a><a
+       href="/t/fu-wu-qi.html"
+       class="tag-item">
+      <span class="tag-name"># 服务器</span>
+      <span class="tag-count">9</span>
+    </a><a
+       href="/t/shang-gan.html"
+       class="tag-item">
+      <span class="tag-name"># 伤感</span>
+      <span class="tag-count">9</span>
+    </a><a
+       href="/t/gan-qing.html"
+       class="tag-item">
+      <span class="tag-name"># 感情</span>
+      <span class="tag-count">8</span>
+    </a><a
+       href="/t/xiang-fa.html"
+       class="tag-item">
+      <span class="tag-name"># 想法</span>
+      <span class="tag-count">7</span>
+    </a><a
+       href="/t/ming-ling.html"
+       class="tag-item">
+      <span class="tag-name"># 命令</span>
+      <span class="tag-count">5</span>
+    </a><a
+       href="/t/linux.html"
+       class="tag-item">
+      <span class="tag-name"># Linux</span>
+      <span class="tag-count">4</span>
+    </a><a
+       href="/t/sui-bi.html"
+       class="tag-item">
+      <span class="tag-name"># 随笔</span>
+      <span class="tag-count">4</span>
+    </a><a
+       href="/t/huai-jiu.html"
+       class="tag-item">
+      <span class="tag-name"># 怀旧</span>
+      <span class="tag-count">4</span>
+    </a><a
+       href="/t/dian-ying.html"
+       class="tag-item">
+      <span class="tag-name"># 电影</span>
+      <span class="tag-count">4</span>
+    </a><a
+       href="/t/xue-xi.html"
+       class="tag-item">
+      <span class="tag-name"># 学习</span>
+      <span class="tag-count">3</span>
+    </a><a
+       href="/t/bo-ke.html"
+       class="tag-item">
+      <span class="tag-name"># 博客</span>
+      <span class="tag-count">3</span>
+    </a><a
+       href="/t/vue.html"
+       class="tag-item">
+      <span class="tag-name"># Vue</span>
+      <span class="tag-count">3</span>
+    </a><a
+       href="/t/guan-hou-gan.html"
+       class="tag-item">
+      <span class="tag-name"># 观后感</span>
+      <span class="tag-count">3</span>
+    </a><a
+       href="/t/san-wen.html"
+       class="tag-item">
+      <span class="tag-name"># 散文</span>
+      <span class="tag-count">3</span>
+    </a><a
+       href="/t/qian-duan.html"
+       class="tag-item">
+      <span class="tag-name"># 前端</span>
+      <span class="tag-count">2</span>
+    </a><a
+       href="/t/github.html"
+       class="tag-item">
+      <span class="tag-name"># Github</span>
+      <span class="tag-count">2</span>
+    </a><a
+       href="/t/windows.html"
+       class="tag-item">
+      <span class="tag-name"># Windows</span>
+      <span class="tag-count">2</span>
+    </a><a
+       href="/t/xi-tong.html"
+       class="tag-item">
+      <span class="tag-name"># 系统</span>
+      <span class="tag-count">2</span>
+    </a><a
+       href="/t/meng-xiang.html"
+       class="tag-item">
+      <span class="tag-name"># 梦想</span>
+      <span class="tag-count">2</span>
+    </a><a
+       href="/t/gan-wu.html"
+       class="tag-item">
+      <span class="tag-name"># 感悟</span>
+      <span class="tag-count">2</span>
+    </a><a
+       href="/t/ai.html"
+       class="tag-item">
+      <span class="tag-name"># AI</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/da-mo-xing.html"
+       class="tag-item">
+      <span class="tag-name"># 大模型</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/hugo.html"
+       class="tag-item">
+      <span class="tag-name"># Hugo</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/github-pages.html"
+       class="tag-item">
+      <span class="tag-name"># Github Pages</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/cusdis.html"
+       class="tag-item">
+      <span class="tag-name"># Cusdis</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/xiao-cheng-xu.html"
+       class="tag-item">
+      <span class="tag-name"># 小程序</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/gong-zhong-hao.html"
+       class="tag-item">
+      <span class="tag-name"># 公众号</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/iptables.html"
+       class="tag-item">
+      <span class="tag-name"># iptables</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/fang-huo-qiang.html"
+       class="tag-item">
+      <span class="tag-name"># 防火墙</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/pinia.html"
+       class="tag-item">
+      <span class="tag-name"># pinia</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/js.html"
+       class="tag-item">
+      <span class="tag-name"># Js</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/macos.html"
+       class="tag-item">
+      <span class="tag-name"># MacOs</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/aria.html"
+       class="tag-item">
+      <span class="tag-name"># Aria</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/mariadb.html"
+       class="tag-item">
+      <span class="tag-name"># MariaDB</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/mysql.html"
+       class="tag-item">
+      <span class="tag-name"># Mysql</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/shu-ju-ku.html"
+       class="tag-item">
+      <span class="tag-name"># 数据库</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/win11.html"
+       class="tag-item">
+      <span class="tag-name"># Win11</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/hei-ke.html"
+       class="tag-item">
+      <span class="tag-name"># 黑客</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/win10.html"
+       class="tag-item">
+      <span class="tag-name"># Win10</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/gitea.html"
+       class="tag-item">
+      <span class="tag-name"># Gitea</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/kuai-le.html"
+       class="tag-item">
+      <span class="tag-name"># 快乐</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/dong-man.html"
+       class="tag-item">
+      <span class="tag-name"># 动漫</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/si-kao.html"
+       class="tag-item">
+      <span class="tag-name"># 思考</span>
+      <span class="tag-count">1</span>
+    </a><a
+       href="/t/ren-xing.html"
+       class="tag-item">
+      <span class="tag-name"># 人性</span>
+      <span class="tag-count">1</span>
+    </a>
+  </div>
+
+
+<!-- 标签详情模式 -->
+
+
+    </main>
+
+    <footer class="footer">
+      <p class="footer-text">© 2026 墨 Mo · 极简博客</p>
+    </footer>
+  </div>
+
+  <script>
+  (function() {
+    // 主题切换
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    var toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+  })();
+  </script>
+  
+  <script>
+  // 无限滚动加载 - 使用 textContent 防止 XSS
+  (function() {
+    var list = document.getElementById('postsList');
+    var loader = document.getElementById('loadMore');
+    if (!list || !loader) return;
+
+    var page = 1;
+    var perPage = 10;
+    var loading = false;
+    var allLoaded = !document.getElementById('loadMoreBtn');
+    var postsCache = null;
+
+    /**
+     * HTML 转义函数（客户端版）
+     */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function loadPosts() {
+      if (loading || allLoaded) return;
+      loading = true;
+      var btn = document.getElementById('loadMoreBtn');
+      if (btn) btn.classList.add('loading');
+
+      if (!postsCache) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/posts.json', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              postsCache = JSON.parse(xhr.responseText);
+              appendPosts();
+            } catch (e) {
+              loading = false;
+              if (btn) btn.classList.remove('loading');
+            }
+          } else {
+            loading = false;
+            if (btn) btn.classList.remove('loading');
+          }
+        };
+        xhr.onerror = function() {
+          loading = false;
+          if (btn) btn.classList.remove('loading');
+        };
+        xhr.send();
+      } else {
+        appendPosts();
+      }
+    }
+
+    function appendPosts() {
+      var start = page * perPage;
+      var end = start + perPage;
+      var items = postsCache.slice(start, end);
+      var btn = document.getElementById('loadMoreBtn');
+
+      if (items.length === 0) {
+        allLoaded = true;
+        loader.style.display = 'none';
+        loading = false;
+        return;
+      }
+
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < items.length; i++) {
+        var p = items[i];
+        var card = document.createElement('article');
+        card.className = 'post-card';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        
+        var link = document.createElement('a');
+        link.href = '/' + escapeHtml(p.url || '/');
+        link.className = 'post-link';
+        
+        var title = document.createElement('h3');
+        title.className = 'post-title';
+        title.textContent = p.title || '';
+        
+        var excerpt = document.createElement('p');
+        excerpt.className = 'post-excerpt';
+        excerpt.textContent = p.excerpt || '';
+        
+        link.appendChild(title);
+        link.appendChild(excerpt);
+        
+        var meta = document.createElement('div');
+        meta.className = 'post-meta';
+        
+        var date = document.createElement('span');
+        date.className = 'post-date';
+        date.textContent = p.date || '';
+        meta.appendChild(date);
+        
+        // if (p.categorySlug) {
+        //   var cat = document.createElement('a');
+        //   cat.href = '/c/' + escapeHtml(p.categorySlug) + '.html';
+        //   cat.className = 'post-category';
+        //   cat.textContent = p.category || '';
+        //   meta.appendChild(cat);
+        // }
+        
+        card.appendChild(link);
+        card.appendChild(meta);
+        frag.appendChild(card);
+      }
+      list.appendChild(frag);
+
+      requestAnimationFrame(function() {
+        var cards = list.querySelectorAll('.post-card');
+        for (var i = cards.length - items.length; i < cards.length; i++) {
+          (function(card, delay) {
+            setTimeout(function() {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, delay);
+          })(cards[i], (i - (cards.length - items.length)) * 60);
+        }
+      });
+
+      page++;
+      loading = false;
+      if (btn) btn.classList.remove('loading');
+
+      if (end >= postsCache.length) {
+        allLoaded = true;
+        loader.style.display = 'none';
+      }
+    }
+
+    var btn = document.getElementById('loadMoreBtn');
+    if (btn) btn.addEventListener('click', loadPosts);
+
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        var rect = loader.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 200) loadPosts();
+      }, 100);
+    });
+  })();
+  </script>
+</body>
+</html>

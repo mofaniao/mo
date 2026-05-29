@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pinia和vuex区别 - 墨 Mo · 极简博客</title>
+  <meta name="description" content="Pinia和Vuex都是Vue.js应用的状态管理库，但它们在设计理念、使用方式以及API设计方面存在一些区别。以下是详细的对比： 1. 设计理念：    Pinia是Vue团队推荐的全新状态管理库，支持Vue 2和Vue 3。它不依赖于全局对象，而是通过创建独立的store实例来管理状态。 ...">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>墨</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <span class="logo-char">墨</span>
+          <span class="logo-en">Mo</span>
+        </a>
+        <nav class="nav">
+          <a href="/" class="nav-link">首页</a>
+          <a href="/archive.html" class="nav-link">归档</a>
+          <a href="/about.html" class="nav-link">关于</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <a href="/categories.html" class="post-back">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="19" y1="12" x2="5" y2="12"></line>
+    <polyline points="12 19 5 12 12 5"></polyline>
+  </svg>
+  返回
+</a>
+
+<article class="post-detail">
+  <header class="post-detail-header">
+    <h1 class="post-detail-title">pinia和vuex区别</h1>
+    <div class="post-detail-meta">
+      <span class="post-date">2024-03-22</span>
+      
+        <a href="/c/ji-shu.html" class="post-category">技术</a>
+      
+    </div>
+  </header>
+
+  <div class="post-detail-content">
+    <p>Pinia和Vuex都是Vue.js应用的状态管理库，但它们在设计理念、使用方式以及API设计方面存在一些区别。以下是详细的对比：</p>
+<ol>
+<li><strong>设计理念</strong>：</li>
+</ol>
+<ul>
+<li><p>Pinia是Vue团队推荐的全新状态管理库，支持Vue 2和Vue 3。它不依赖于全局对象，而是通过创建独立的store实例来管理状态。</p>
+</li>
+<li><p>Vuex是老牌的状态管理库，同样支持Vue 2和Vue 3。它使用Redux架构，提供了全局的state、getters、mutations和actions等概念。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>使用方式</strong>：</li>
+</ol>
+<ul>
+<li><p>Pinia的API设计简洁，没有mutation的概念，只有state、getters和actions（同步或异步）来修改state数据。它默认将状态存储在内存中，如果需要使用本地存储，配置上可能比Vuex麻烦一些。</p>
+</li>
+<li><p>Vuex的使用则更加灵活，用户可以根据需要自定义模块和组织代码。它提供了modules配置，允许开发者以模块化的方式来组织状态管理逻辑。</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>API设计</strong>：</li>
+</ol>
+<ul>
+<li><p>Pinia有更好的TypeScript支持和模块热更新的特性。它的语法相对Vuex来说更容易理解和使用，更加灵活。</p>
+</li>
+<li><p>Vuex拥有SSR和Vue DevTools的支持，这对于调试和开发大型应用非常有帮助。</p>
+</li>
+</ul>
+<p>总的来说，Pinia作为新兴的状态管理库，以其简洁的API设计和对Vue 3的原生支持而受到关注。而Vuex作为一个成熟的解决方案，因其稳定性和灵活性在许多大型项目中得到了广泛应用。在实际项目中选择哪一个，需要根据项目的具体需求和团队的技术栈来决定。</p>
+
+  </div>
+
+  
+    <div class="post-detail-tags">
+      <a
+         href="/t/pinia.html"
+         class="post-tag"># pinia</a><a
+         href="/t/vue.html"
+         class="post-tag"># Vue</a><a
+         href="/t/js.html"
+         class="post-tag"># Js</a><a
+         href="/t/qian-duan.html"
+         class="post-tag"># 前端</a>
+    </div>
+  
+
+  <nav class="post-nav">
+    
+      <a href="/p/zhong-guo-du-li-kai-fa-zhe-xiang-mu-lie-biao.html" class="post-nav-item post-nav-prev">
+        <span class="post-nav-label">上一篇</span>
+        <span class="post-nav-title">中国独立开发者项目列表</span>
+      </a>
+    
+    
+      <a href="/p/shi-yong-iptables-fang-huo-qiang-ju-jue-guo-wai-ip-ping-bi-guo-wai-ip-fang-wen-fu-wu-qi.html" class="post-nav-item post-nav-next">
+        <span class="post-nav-label">下一篇</span>
+        <span class="post-nav-title">使用iptables防火墙拒绝国外IP/屏蔽国外IP访问服务器</span>
+      </a>
+    
+  </nav>
+</article>
+
+    </main>
+
+    <footer class="footer">
+      <p class="footer-text">© 2026 墨 Mo · 极简博客</p>
+    </footer>
+  </div>
+
+  <script>
+  (function() {
+    // 主题切换
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    var toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+  })();
+  </script>
+  
+  <script>
+  // 无限滚动加载 - 使用 textContent 防止 XSS
+  (function() {
+    var list = document.getElementById('postsList');
+    var loader = document.getElementById('loadMore');
+    if (!list || !loader) return;
+
+    var page = 1;
+    var perPage = 10;
+    var loading = false;
+    var allLoaded = !document.getElementById('loadMoreBtn');
+    var postsCache = null;
+
+    /**
+     * HTML 转义函数（客户端版）
+     */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function loadPosts() {
+      if (loading || allLoaded) return;
+      loading = true;
+      var btn = document.getElementById('loadMoreBtn');
+      if (btn) btn.classList.add('loading');
+
+      if (!postsCache) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/posts.json', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              postsCache = JSON.parse(xhr.responseText);
+              appendPosts();
+            } catch (e) {
+              loading = false;
+              if (btn) btn.classList.remove('loading');
+            }
+          } else {
+            loading = false;
+            if (btn) btn.classList.remove('loading');
+          }
+        };
+        xhr.onerror = function() {
+          loading = false;
+          if (btn) btn.classList.remove('loading');
+        };
+        xhr.send();
+      } else {
+        appendPosts();
+      }
+    }
+
+    function appendPosts() {
+      var start = page * perPage;
+      var end = start + perPage;
+      var items = postsCache.slice(start, end);
+      var btn = document.getElementById('loadMoreBtn');
+
+      if (items.length === 0) {
+        allLoaded = true;
+        loader.style.display = 'none';
+        loading = false;
+        return;
+      }
+
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < items.length; i++) {
+        var p = items[i];
+        var card = document.createElement('article');
+        card.className = 'post-card';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        
+        var link = document.createElement('a');
+        link.href = '/' + escapeHtml(p.url || '/');
+        link.className = 'post-link';
+        
+        var title = document.createElement('h3');
+        title.className = 'post-title';
+        title.textContent = p.title || '';
+        
+        var excerpt = document.createElement('p');
+        excerpt.className = 'post-excerpt';
+        excerpt.textContent = p.excerpt || '';
+        
+        link.appendChild(title);
+        link.appendChild(excerpt);
+        
+        var meta = document.createElement('div');
+        meta.className = 'post-meta';
+        
+        var date = document.createElement('span');
+        date.className = 'post-date';
+        date.textContent = p.date || '';
+        meta.appendChild(date);
+        
+        // if (p.categorySlug) {
+        //   var cat = document.createElement('a');
+        //   cat.href = '/c/' + escapeHtml(p.categorySlug) + '.html';
+        //   cat.className = 'post-category';
+        //   cat.textContent = p.category || '';
+        //   meta.appendChild(cat);
+        // }
+        
+        card.appendChild(link);
+        card.appendChild(meta);
+        frag.appendChild(card);
+      }
+      list.appendChild(frag);
+
+      requestAnimationFrame(function() {
+        var cards = list.querySelectorAll('.post-card');
+        for (var i = cards.length - items.length; i < cards.length; i++) {
+          (function(card, delay) {
+            setTimeout(function() {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, delay);
+          })(cards[i], (i - (cards.length - items.length)) * 60);
+        }
+      });
+
+      page++;
+      loading = false;
+      if (btn) btn.classList.remove('loading');
+
+      if (end >= postsCache.length) {
+        allLoaded = true;
+        loader.style.display = 'none';
+      }
+    }
+
+    var btn = document.getElementById('loadMoreBtn');
+    if (btn) btn.addEventListener('click', loadPosts);
+
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        var rect = loader.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 200) loadPosts();
+      }, 100);
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+/* 共享主题切换按钮样式 — 所有模块统一使用 */
+
+.theme-toggle,
+.theme-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text, var(--text-sub, #666));
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.theme-toggle:hover,
+.theme-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-toggle svg,
+.theme-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-toggle .icon-sun,
+.theme-btn .icon-sun {
+  display: none;
+}
+
+.theme-toggle .icon-moon,
+.theme-btn .icon-moon {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun,
+[data-theme="dark"] .theme-btn .icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon,
+[data-theme="dark"] .theme-btn .icon-moon {
+  display: none;
+}

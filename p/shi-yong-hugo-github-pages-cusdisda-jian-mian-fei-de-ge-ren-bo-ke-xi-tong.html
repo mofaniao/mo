@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用Hugo + GitHub Pages + Cusdis搭建免费的个人博客系统 - 墨 Mo · 极简博客</title>
+  <meta name="description" content="搭建一个免费的个人博客系统，可以使用 Hugo 静态网站生成器、GitHub Pages 作为托管平台以及 Cusdis 作为评论系统。以下是详细的步骤和示例代码：  1. 安装 Hugo 首先，你需要在你的计算机上安装 Hugo。你可以从 Hugo 官网 下载并安装适合你操作系统的版本。  ...">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>墨</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <span class="logo-char">墨</span>
+          <span class="logo-en">Mo</span>
+        </a>
+        <nav class="nav">
+          <a href="/" class="nav-link">首页</a>
+          <a href="/archive.html" class="nav-link">归档</a>
+          <a href="/about.html" class="nav-link">关于</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <a href="/categories.html" class="post-back">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="19" y1="12" x2="5" y2="12"></line>
+    <polyline points="12 19 5 12 12 5"></polyline>
+  </svg>
+  返回
+</a>
+
+<article class="post-detail">
+  <header class="post-detail-header">
+    <h1 class="post-detail-title">使用Hugo + GitHub Pages + Cusdis搭建免费的个人博客系统</h1>
+    <div class="post-detail-meta">
+      <span class="post-date">2024-10-27</span>
+      
+        <a href="/c/ji-shu.html" class="post-category">技术</a>
+      
+    </div>
+  </header>
+
+  <div class="post-detail-content">
+    <p>搭建一个免费的个人博客系统，可以使用 Hugo 静态网站生成器、GitHub Pages 作为托管平台以及 Cusdis 作为评论系统。以下是详细的步骤和示例代码：</p>
+<h3>1. 安装 Hugo</h3>
+<p>首先，你需要在你的计算机上安装 Hugo。你可以从 <a href="https://gohugo.io/getting-started/installing/">Hugo 官网</a> 下载并安装适合你操作系统的版本。</p>
+<h3>2. 创建一个新的 Hugo 站点</h3>
+<p>打开终端或命令提示符，运行以下命令来创建一个新的 Hugo 站点：</p>
+<pre><code class="language-bash">hugo new site myblog
+cd myblog
+</code></pre>
+<p>这将创建一个名为 <code>myblog</code> 的新目录，其中包含一些默认的配置文件和文件夹。</p>
+<h3>3. 添加主题</h3>
+<p>选择一个你喜欢的 Hugo 主题。这里以 <code>ananke</code> 为例：</p>
+<pre><code class="language-bash">git init
+git submodule add https://github.com/budparr/gohugo-theme-ananke.git themes/ananke
+echo &#39;theme: &quot;ananke&quot;&#39; &gt;&gt; config.toml
+</code></pre>
+<h3>4. 配置 Cusdis 评论系统</h3>
+<p>在 <code>config.toml</code> 文件中添加 Cusdis 的配置信息：</p>
+<pre><code class="language-toml">[params]
+    cusdis = {
+        appId = &quot;your_cusdis_app_id&quot;
+        host = &quot;https://cusdis.com&quot;
+        scriptSrc = &quot;//cdn.cusdis.com/js/cusdis.es.js&quot;
+    }
+</code></pre>
+<p>你需要在 <a href="https://cusdis.com/">Cusdis</a> 注册账号并创建一个应用来获取 <code>appId</code>。</p>
+<h3>5. 编写内容</h3>
+<p>使用 Hugo 的命令来创建新的文章：</p>
+<pre><code class="language-bash">hugo new posts/my-first-post.md
+</code></pre>
+<p>编辑 <code>content/posts/my-first-post.md</code> 文件，添加你的文章内容和标题等。</p>
+<h3>6. 本地预览</h3>
+<p>运行以下命令来启动本地服务器预览你的网站：</p>
+<pre><code class="language-bash">hugo server -D
+</code></pre>
+<p>访问 <code>http://localhost:1313</code> 查看你的博客。</p>
+<h3>7. 部署到 GitHub Pages</h3>
+<p>首先，初始化你的 Git 仓库并提交你的更改：</p>
+<pre><code class="language-bash">git init
+git add .
+git commit -m &quot;Initial commit&quot;
+</code></pre>
+<p>然后，将你的仓库推送到 GitHub：</p>
+<pre><code class="language-bash">git remote add origin https://github.com/yourusername/yourrepository.git
+git push -u origin master
+</code></pre>
+<p>在 GitHub 仓库的设置中，找到 &quot;Pages&quot; 部分，选择 <code>master</code> 分支作为 GitHub Pages 的源。</p>
+<h3>8. 完成</h3>
+<p>现在，你的博客已经成功部署到了 GitHub Pages，并且集成了 Cusdis 评论系统。每当你更新内容并推送到 GitHub，GitHub Pages 会自动更新你的网站。</p>
+
+  </div>
+
+  
+    <div class="post-detail-tags">
+      <a
+         href="/t/hugo.html"
+         class="post-tag"># Hugo</a><a
+         href="/t/github-pages.html"
+         class="post-tag"># Github Pages</a><a
+         href="/t/cusdis.html"
+         class="post-tag"># Cusdis</a><a
+         href="/t/bo-ke.html"
+         class="post-tag"># 博客</a>
+    </div>
+  
+
+  <nav class="post-nav">
+    
+      <a href="/p/wei-xin-xiao-cheng-xu-qian-ru-ren-yi-gong-zhong-hao-wen-zhang.html" class="post-nav-item post-nav-prev">
+        <span class="post-nav-label">上一篇</span>
+        <span class="post-nav-title">微信小程序嵌入任意公众号文章</span>
+      </a>
+    
+    
+      <a href="/p/aizhong-de-tokensdao-di-shi-shi-me.html" class="post-nav-item post-nav-next">
+        <span class="post-nav-label">下一篇</span>
+        <span class="post-nav-title">AI中的tokens到底是什么？</span>
+      </a>
+    
+  </nav>
+</article>
+
+    </main>
+
+    <footer class="footer">
+      <p class="footer-text">© 2026 墨 Mo · 极简博客</p>
+    </footer>
+  </div>
+
+  <script>
+  (function() {
+    // 主题切换
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    var toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+  })();
+  </script>
+  
+  <script>
+  // 无限滚动加载 - 使用 textContent 防止 XSS
+  (function() {
+    var list = document.getElementById('postsList');
+    var loader = document.getElementById('loadMore');
+    if (!list || !loader) return;
+
+    var page = 1;
+    var perPage = 10;
+    var loading = false;
+    var allLoaded = !document.getElementById('loadMoreBtn');
+    var postsCache = null;
+
+    /**
+     * HTML 转义函数（客户端版）
+     */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function loadPosts() {
+      if (loading || allLoaded) return;
+      loading = true;
+      var btn = document.getElementById('loadMoreBtn');
+      if (btn) btn.classList.add('loading');
+
+      if (!postsCache) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/posts.json', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              postsCache = JSON.parse(xhr.responseText);
+              appendPosts();
+            } catch (e) {
+              loading = false;
+              if (btn) btn.classList.remove('loading');
+            }
+          } else {
+            loading = false;
+            if (btn) btn.classList.remove('loading');
+          }
+        };
+        xhr.onerror = function() {
+          loading = false;
+          if (btn) btn.classList.remove('loading');
+        };
+        xhr.send();
+      } else {
+        appendPosts();
+      }
+    }
+
+    function appendPosts() {
+      var start = page * perPage;
+      var end = start + perPage;
+      var items = postsCache.slice(start, end);
+      var btn = document.getElementById('loadMoreBtn');
+
+      if (items.length === 0) {
+        allLoaded = true;
+        loader.style.display = 'none';
+        loading = false;
+        return;
+      }
+
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < items.length; i++) {
+        var p = items[i];
+        var card = document.createElement('article');
+        card.className = 'post-card';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        
+        var link = document.createElement('a');
+        link.href = '/' + escapeHtml(p.url || '/');
+        link.className = 'post-link';
+        
+        var title = document.createElement('h3');
+        title.className = 'post-title';
+        title.textContent = p.title || '';
+        
+        var excerpt = document.createElement('p');
+        excerpt.className = 'post-excerpt';
+        excerpt.textContent = p.excerpt || '';
+        
+        link.appendChild(title);
+        link.appendChild(excerpt);
+        
+        var meta = document.createElement('div');
+        meta.className = 'post-meta';
+        
+        var date = document.createElement('span');
+        date.className = 'post-date';
+        date.textContent = p.date || '';
+        meta.appendChild(date);
+        
+        // if (p.categorySlug) {
+        //   var cat = document.createElement('a');
+        //   cat.href = '/c/' + escapeHtml(p.categorySlug) + '.html';
+        //   cat.className = 'post-category';
+        //   cat.textContent = p.category || '';
+        //   meta.appendChild(cat);
+        // }
+        
+        card.appendChild(link);
+        card.appendChild(meta);
+        frag.appendChild(card);
+      }
+      list.appendChild(frag);
+
+      requestAnimationFrame(function() {
+        var cards = list.querySelectorAll('.post-card');
+        for (var i = cards.length - items.length; i < cards.length; i++) {
+          (function(card, delay) {
+            setTimeout(function() {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, delay);
+          })(cards[i], (i - (cards.length - items.length)) * 60);
+        }
+      });
+
+      page++;
+      loading = false;
+      if (btn) btn.classList.remove('loading');
+
+      if (end >= postsCache.length) {
+        allLoaded = true;
+        loader.style.display = 'none';
+      }
+    }
+
+    var btn = document.getElementById('loadMoreBtn');
+    if (btn) btn.addEventListener('click', loadPosts);
+
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        var rect = loader.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 200) loadPosts();
+      }, 100);
+    });
+  })();
+  </script>
+</body>
+</html>

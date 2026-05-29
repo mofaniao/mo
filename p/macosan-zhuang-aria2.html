@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>macOS安装Aria2 - 墨 Mo · 极简博客</title>
+  <meta name="description" content="在macOS上安装Aria2，可以通过Homebrew来进行安装。以下是具体的安装步骤： 1. 安装Homebrew（如果还没有安装的话）：     打开终端应用程序。         输入以下命令并回车：           	     按照提示完成Homebrew的安装。     2. 使...">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>墨</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <span class="logo-char">墨</span>
+          <span class="logo-en">Mo</span>
+        </a>
+        <nav class="nav">
+          <a href="/" class="nav-link">首页</a>
+          <a href="/archive.html" class="nav-link">归档</a>
+          <a href="/about.html" class="nav-link">关于</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <a href="/categories.html" class="post-back">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="19" y1="12" x2="5" y2="12"></line>
+    <polyline points="12 19 5 12 12 5"></polyline>
+  </svg>
+  返回
+</a>
+
+<article class="post-detail">
+  <header class="post-detail-header">
+    <h1 class="post-detail-title">macOS安装Aria2</h1>
+    <div class="post-detail-meta">
+      <span class="post-date">2024-03-07</span>
+      
+        <a href="/c/ji-shu.html" class="post-category">技术</a>
+      
+    </div>
+  </header>
+
+  <div class="post-detail-content">
+    <p>在macOS上安装Aria2，可以通过Homebrew来进行安装。以下是具体的安装步骤：</p>
+<ol>
+<li><p><strong>安装Homebrew</strong>（如果还没有安装的话）：</p>
+<ul>
+<li><p>打开终端应用程序。</p>
+</li>
+<li><p>输入以下命令并回车：</p>
+<pre><code class="language-shell">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre>
+</li>
+<li><p>按照提示完成Homebrew的安装。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>使用Homebrew安装Aria2</strong>：</p>
+<ul>
+<li><p>打开终端。</p>
+</li>
+<li><p>输入以下命令并回车：</p>
+<pre><code class="language-shell">brew install aria2
+</code></pre>
+</li>
+<li><p>等待安装过程完成。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>配置Aria2</strong>：</p>
+<ul>
+<li><p>创建配置文件和会话文件：</p>
+<pre><code class="language-shell">mkdir ~/.aria2 &amp;&amp; cd ~/.aria2
+</code></pre>
+</li>
+<li><p>使用文本编辑器创建或编辑<code>aria2.conf</code>文件，例如使用<code>nano</code>编辑器：</p>
+<pre><code class="language-shell">nano aria2.conf
+</code></pre>
+</li>
+<li><p>在<code>aria2.conf</code>文件中，您可以设置Aria2的下载路径、速度限制等配置选项。</p>
+</li>
+<li><p>创建或编辑<code>aria2.session</code>文件用于保存下载任务的状态。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>启动Aria2</strong>：</p>
+<ul>
+<li><p>在终端中输入以下命令来启动Aria2：</p>
+<pre><code class="language-shell">aria2c --enable-rpc --rpc-listen-all
+</code></pre>
+</li>
+<li><p>这将启动Aria2并启用RPC功能，允许通过RPC接口控制Aria2。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>使用前端工具</strong>（可选）：</p>
+<ul>
+<li>为了更方便地管理下载任务，可以使用如AriaNG或YAAW等前端工具，这些工具可以通过RPC与Aria2交互。</li>
+</ul>
+</li>
+</ol>
+<p>请注意，上述步骤是基于Homebrew的安装方法，如果希望使用其他方式安装Aria2，比如从官方页面直接下载二进制包，或者通过命令行手动构建，也是可以的。不过，使用Homebrew是一种比较简便且易于管理的方法。</p>
+<p>总的来说，安装过程中如果遇到任何问题，建议参考Aria2的官方文档或相关社区论坛获取帮助。</p>
+
+  </div>
+
+  
+    <div class="post-detail-tags">
+      <a
+         href="/t/macos.html"
+         class="post-tag"># MacOs</a><a
+         href="/t/aria.html"
+         class="post-tag"># Aria</a><a
+         href="/t/ming-ling.html"
+         class="post-tag"># 命令</a>
+    </div>
+  
+
+  <nav class="post-nav">
+    
+      <a href="/p/mariadbshe-zhi-zhu-cong-fu-wu-qi-shi-xian-mysqlfu-zhi.html" class="post-nav-item post-nav-prev">
+        <span class="post-nav-label">上一篇</span>
+        <span class="post-nav-title">MariaDB设置主从服务器实现MySQL复制</span>
+      </a>
+    
+    
+      <a href="/p/zhong-guo-du-li-kai-fa-zhe-xiang-mu-lie-biao.html" class="post-nav-item post-nav-next">
+        <span class="post-nav-label">下一篇</span>
+        <span class="post-nav-title">中国独立开发者项目列表</span>
+      </a>
+    
+  </nav>
+</article>
+
+    </main>
+
+    <footer class="footer">
+      <p class="footer-text">© 2026 墨 Mo · 极简博客</p>
+    </footer>
+  </div>
+
+  <script>
+  (function() {
+    // 主题切换
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    var toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+  })();
+  </script>
+  
+  <script>
+  // 无限滚动加载 - 使用 textContent 防止 XSS
+  (function() {
+    var list = document.getElementById('postsList');
+    var loader = document.getElementById('loadMore');
+    if (!list || !loader) return;
+
+    var page = 1;
+    var perPage = 10;
+    var loading = false;
+    var allLoaded = !document.getElementById('loadMoreBtn');
+    var postsCache = null;
+
+    /**
+     * HTML 转义函数（客户端版）
+     */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function loadPosts() {
+      if (loading || allLoaded) return;
+      loading = true;
+      var btn = document.getElementById('loadMoreBtn');
+      if (btn) btn.classList.add('loading');
+
+      if (!postsCache) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/posts.json', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              postsCache = JSON.parse(xhr.responseText);
+              appendPosts();
+            } catch (e) {
+              loading = false;
+              if (btn) btn.classList.remove('loading');
+            }
+          } else {
+            loading = false;
+            if (btn) btn.classList.remove('loading');
+          }
+        };
+        xhr.onerror = function() {
+          loading = false;
+          if (btn) btn.classList.remove('loading');
+        };
+        xhr.send();
+      } else {
+        appendPosts();
+      }
+    }
+
+    function appendPosts() {
+      var start = page * perPage;
+      var end = start + perPage;
+      var items = postsCache.slice(start, end);
+      var btn = document.getElementById('loadMoreBtn');
+
+      if (items.length === 0) {
+        allLoaded = true;
+        loader.style.display = 'none';
+        loading = false;
+        return;
+      }
+
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < items.length; i++) {
+        var p = items[i];
+        var card = document.createElement('article');
+        card.className = 'post-card';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        
+        var link = document.createElement('a');
+        link.href = '/' + escapeHtml(p.url || '/');
+        link.className = 'post-link';
+        
+        var title = document.createElement('h3');
+        title.className = 'post-title';
+        title.textContent = p.title || '';
+        
+        var excerpt = document.createElement('p');
+        excerpt.className = 'post-excerpt';
+        excerpt.textContent = p.excerpt || '';
+        
+        link.appendChild(title);
+        link.appendChild(excerpt);
+        
+        var meta = document.createElement('div');
+        meta.className = 'post-meta';
+        
+        var date = document.createElement('span');
+        date.className = 'post-date';
+        date.textContent = p.date || '';
+        meta.appendChild(date);
+        
+        // if (p.categorySlug) {
+        //   var cat = document.createElement('a');
+        //   cat.href = '/c/' + escapeHtml(p.categorySlug) + '.html';
+        //   cat.className = 'post-category';
+        //   cat.textContent = p.category || '';
+        //   meta.appendChild(cat);
+        // }
+        
+        card.appendChild(link);
+        card.appendChild(meta);
+        frag.appendChild(card);
+      }
+      list.appendChild(frag);
+
+      requestAnimationFrame(function() {
+        var cards = list.querySelectorAll('.post-card');
+        for (var i = cards.length - items.length; i < cards.length; i++) {
+          (function(card, delay) {
+            setTimeout(function() {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, delay);
+          })(cards[i], (i - (cards.length - items.length)) * 60);
+        }
+      });
+
+      page++;
+      loading = false;
+      if (btn) btn.classList.remove('loading');
+
+      if (end >= postsCache.length) {
+        allLoaded = true;
+        loader.style.display = 'none';
+      }
+    }
+
+    var btn = document.getElementById('loadMoreBtn');
+    if (btn) btn.addEventListener('click', loadPosts);
+
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        var rect = loader.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 200) loadPosts();
+      }, 100);
+    });
+  })();
+  </script>
+</body>
+</html>

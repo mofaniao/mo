@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>归档 - 墨 Mo · 极简博客</title>
+  <meta name="description" content="">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>墨</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <span class="logo-char">墨</span>
+          <span class="logo-en">Mo</span>
+        </a>
+        <nav class="nav">
+          <a href="/" class="nav-link">首页</a>
+          <a href="/archive.html" class="nav-link">归档</a>
+          <a href="/about.html" class="nav-link">关于</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="archive-header">
+  <h2 class="archive-title">归档</h2>
+  <p class="archive-count">共 54 篇文章</p>
+</div>
+
+<div class="archive-list">
+  <div class="archive-year">
+    <h3 class="archive-year-title">2025</h3>
+    <div class="archive-posts">
+      <a
+         href="p/aizhong-de-tokensdao-di-shi-shi-me.html"
+         class="archive-item">
+        <span class="archive-item-date">01-07</span>
+        <span class="archive-item-title">AI中的tokens到底是什么？</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2024</h3>
+    <div class="archive-posts">
+      <a
+         href="p/shi-yong-hugo-github-pages-cusdisda-jian-mian-fei-de-ge-ren-bo-ke-xi-tong.html"
+         class="archive-item">
+        <span class="archive-item-date">10-27</span>
+        <span class="archive-item-title">使用Hugo + GitHub Pages + Cusdis搭建免费的个人博客系统</span>
+      </a><a
+         href="p/wei-xin-xiao-cheng-xu-qian-ru-ren-yi-gong-zhong-hao-wen-zhang.html"
+         class="archive-item">
+        <span class="archive-item-date">04-18</span>
+        <span class="archive-item-title">微信小程序嵌入任意公众号文章</span>
+      </a><a
+         href="p/vuedan-ye-mian-yu-duo-ye-mian-qu-bie-ji-you-dian.html"
+         class="archive-item">
+        <span class="archive-item-date">03-29</span>
+        <span class="archive-item-title">vue单页面与多页面区别及优点</span>
+      </a><a
+         href="p/shi-yong-iptables-fang-huo-qiang-ju-jue-guo-wai-ip-ping-bi-guo-wai-ip-fang-wen-fu-wu-qi.html"
+         class="archive-item">
+        <span class="archive-item-date">03-26</span>
+        <span class="archive-item-title">使用iptables防火墙拒绝国外IP/屏蔽国外IP访问服务器</span>
+      </a><a
+         href="p/piniahe-vuexqu-bie.html"
+         class="archive-item">
+        <span class="archive-item-date">03-22</span>
+        <span class="archive-item-title">pinia和vuex区别</span>
+      </a><a
+         href="p/zhong-guo-du-li-kai-fa-zhe-xiang-mu-lie-biao.html"
+         class="archive-item">
+        <span class="archive-item-date">03-15</span>
+        <span class="archive-item-title">中国独立开发者项目列表</span>
+      </a><a
+         href="p/macosan-zhuang-aria2.html"
+         class="archive-item">
+        <span class="archive-item-date">03-07</span>
+        <span class="archive-item-title">macOS安装Aria2</span>
+      </a><a
+         href="p/mariadbshe-zhi-zhu-cong-fu-wu-qi-shi-xian-mysqlfu-zhi.html"
+         class="archive-item">
+        <span class="archive-item-date">03-07</span>
+        <span class="archive-item-title">MariaDB设置主从服务器实现MySQL复制</span>
+      </a><a
+         href="p/shi-yong-vue.jsbu-shu-bo-ke-wang-zhan.html"
+         class="archive-item">
+        <span class="archive-item-date">03-06</span>
+        <span class="archive-item-title">使用Vue.js部署博客网站</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2023</h3>
+    <div class="archive-posts">
+      <a
+         href="p/windows11-xia-zai.html"
+         class="archive-item">
+        <span class="archive-item-date">10-31</span>
+        <span class="archive-item-title">Windows11 下载</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2022</h3>
+    <div class="archive-posts">
+      <a
+         href="p/githubshen-tou-ce-shi-gong-ju-ku.html"
+         class="archive-item">
+        <span class="archive-item-date">09-22</span>
+        <span class="archive-item-title">Github渗透测试工具库</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2021</h3>
+    <div class="archive-posts">
+      <a
+         href="p/windows10xia-zai.html"
+         class="archive-item">
+        <span class="archive-item-date">11-17</span>
+        <span class="archive-item-title">windows10下载</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2020</h3>
+    <div class="archive-posts">
+      <a
+         href="p/linux-df-ming-ling.html"
+         class="archive-item">
+        <span class="archive-item-date">08-16</span>
+        <span class="archive-item-title">Linux df 命令</span>
+      </a><a
+         href="p/linuxan-zhuang-gitea.html"
+         class="archive-item">
+        <span class="archive-item-date">03-04</span>
+        <span class="archive-item-title">Linux安装Gitea</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2014</h3>
+    <div class="archive-posts">
+      <a
+         href="p/ai-qing-zhe-jian-xiao-shi.html"
+         class="archive-item">
+        <span class="archive-item-date">07-23</span>
+        <span class="archive-item-title">爱情这件小事</span>
+      </a><a
+         href="p/wei-meng-xiang-er-huo-de-ren.html"
+         class="archive-item">
+        <span class="archive-item-date">07-03</span>
+        <span class="archive-item-title">为梦想而活的人</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2011</h3>
+    <div class="archive-posts">
+      <a
+         href="p/zui-jin-you-dian-huai-jiu.html"
+         class="archive-item">
+        <span class="archive-item-date">07-21</span>
+        <span class="archive-item-title">最近有点怀旧</span>
+      </a><a
+         href="p/linuxzhong-tian-jia-ju-you-rootquan-xian-de-zhang-hu.html"
+         class="archive-item">
+        <span class="archive-item-date">02-27</span>
+        <span class="archive-item-title">Linux中添加具有root权限的账户</span>
+      </a><a
+         href="p/linuxgua-zai-ci-pan.html"
+         class="archive-item">
+        <span class="archive-item-date">02-26</span>
+        <span class="archive-item-title">Linux挂载磁盘</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2010</h3>
+    <div class="archive-posts">
+      <a
+         href="p/xie-gei-mou-ren.html"
+         class="archive-item">
+        <span class="archive-item-date">10-29</span>
+        <span class="archive-item-title">写给某人</span>
+      </a><a
+         href="p/wo-men-jin-nian-er-shi-yi-er-sui.html"
+         class="archive-item">
+        <span class="archive-item-date">09-27</span>
+        <span class="archive-item-title">我们今年二十一二岁</span>
+      </a><a
+         href="p/yi-ge-ren-de-cheng-shi.html"
+         class="archive-item">
+        <span class="archive-item-date">09-13</span>
+        <span class="archive-item-title">一个人的城市</span>
+      </a><a
+         href="p/liu-yan.html"
+         class="archive-item">
+        <span class="archive-item-date">05-26</span>
+        <span class="archive-item-title">留言</span>
+      </a><a
+         href="p/yi-ge-ren-de-cheng-shi-xia-yu.html"
+         class="archive-item">
+        <span class="archive-item-date">05-08</span>
+        <span class="archive-item-title">一个人的城市·夏雨</span>
+      </a><a
+         href="p/yi-ge-ren-de-cheng-shi-kuai-le.html"
+         class="archive-item">
+        <span class="archive-item-date">05-05</span>
+        <span class="archive-item-title">一个人的城市·快乐</span>
+      </a><a
+         href="p/yi-ge-ren-de-cheng-shi-ji-jie.html"
+         class="archive-item">
+        <span class="archive-item-date">05-03</span>
+        <span class="archive-item-title">一个人的城市·季节</span>
+      </a><a
+         href="p/yi-ge-ren-de-cheng-shi-meng-xiang.html"
+         class="archive-item">
+        <span class="archive-item-date">05-02</span>
+        <span class="archive-item-title">一个人的城市·梦想</span>
+      </a><a
+         href="p/cong-ri-han-kan-zhong-guo-dong-man.html"
+         class="archive-item">
+        <span class="archive-item-date">03-26</span>
+        <span class="archive-item-title">从日韩看中国动漫</span>
+      </a><a
+         href="p/ru-hua-si-die.html"
+         class="archive-item">
+        <span class="archive-item-date">03-24</span>
+        <span class="archive-item-title">如花似蝶</span>
+      </a><a
+         href="p/hen-duo-hen-sha.html"
+         class="archive-item">
+        <span class="archive-item-date">03-23</span>
+        <span class="archive-item-title">很多很傻</span>
+      </a><a
+         href="p/xue-xi-zhi-wai.html"
+         class="archive-item">
+        <span class="archive-item-date">03-22</span>
+        <span class="archive-item-title">学习之外</span>
+      </a><a
+         href="p/guan-yu-ren-xing-de-yi-xie-xiang-fa.html"
+         class="archive-item">
+        <span class="archive-item-date">03-21</span>
+        <span class="archive-item-title">关于人性的一些想法</span>
+      </a><a
+         href="p/xiao-qian.html"
+         class="archive-item">
+        <span class="archive-item-date">03-21</span>
+        <span class="archive-item-title">小倩</span>
+      </a><a
+         href="p/ting-zhi-ji-dian-cong-qian.html"
+         class="archive-item">
+        <span class="archive-item-date">03-20</span>
+        <span class="archive-item-title">停止，祭奠从前</span>
+      </a><a
+         href="p/zhai-diao-er-ji-hui-mou-shi-jie.html"
+         class="archive-item">
+        <span class="archive-item-date">03-18</span>
+        <span class="archive-item-title">摘掉耳机，回眸世界</span>
+      </a><a
+         href="p/zui-jin-guo-de-bu-hao.html"
+         class="archive-item">
+        <span class="archive-item-date">03-16</span>
+        <span class="archive-item-title">最近过的不好</span>
+      </a><a
+         href="p/dian-ying-2012-de-hou-yi-zheng.html"
+         class="archive-item">
+        <span class="archive-item-date">03-15</span>
+        <span class="archive-item-title">电影《2012》的后遗症</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2009</h3>
+    <div class="archive-posts">
+      <a
+         href="p/qi-xi-zhong-pian.html"
+         class="archive-item">
+        <span class="archive-item-date">08-26</span>
+        <span class="archive-item-title">七夕终篇</span>
+      </a><a
+         href="p/qi-xi-xue.html"
+         class="archive-item">
+        <span class="archive-item-date">08-25</span>
+        <span class="archive-item-title">七夕雪</span>
+      </a><a
+         href="p/yi-si-zhi-xin-wei-shui-su-xing.html"
+         class="archive-item">
+        <span class="archive-item-date">03-27</span>
+        <span class="archive-item-title">已死之心为谁苏醒</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2008</h3>
+    <div class="archive-posts">
+      <a
+         href="p/xue-hua-piao-fei-qi-xi-qing-mei-ta-xiang.html"
+         class="archive-item">
+        <span class="archive-item-date">10-11</span>
+        <span class="archive-item-title">雪花飘飞七夕情没他乡</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2007</h3>
+    <div class="archive-posts">
+      <a
+         href="p/wo-bu-zhi-dao-zhe-shou-xi-de-wei-dao.html"
+         class="archive-item">
+        <span class="archive-item-date">11-26</span>
+        <span class="archive-item-title">我不知道,这熟悉的味道</span>
+      </a><a
+         href="p/hei-he-zi-yu-bo-li-bei.html"
+         class="archive-item">
+        <span class="archive-item-date">03-04</span>
+        <span class="archive-item-title">黑盒子与玻璃杯</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2006</h3>
+    <div class="archive-posts">
+      <a
+         href="p/wo-yu-zhe-ge-nu-hai.html"
+         class="archive-item">
+        <span class="archive-item-date">11-12</span>
+        <span class="archive-item-title">我与这个女孩</span>
+      </a><a
+         href="p/chi-dao-he-bei-ji.html"
+         class="archive-item">
+        <span class="archive-item-date">11-12</span>
+        <span class="archive-item-title">赤道和北极</span>
+      </a><a
+         href="p/qu-zhong-ren-san.html"
+         class="archive-item">
+        <span class="archive-item-date">10-18</span>
+        <span class="archive-item-title">曲终人散</span>
+      </a><a
+         href="p/yi-ge-gao-zhong-sheng-de-zi-chuan.html"
+         class="archive-item">
+        <span class="archive-item-date">10-07</span>
+        <span class="archive-item-title">一个高中生的自传</span>
+      </a><a
+         href="p/huo-lei-ren.html"
+         class="archive-item">
+        <span class="archive-item-date">10-06</span>
+        <span class="archive-item-title">火·泪·人</span>
+      </a><a
+         href="p/xin-sui-xin-fei.html"
+         class="archive-item">
+        <span class="archive-item-date">08-28</span>
+        <span class="archive-item-title">心碎心飞</span>
+      </a><a
+         href="p/die-zang.html"
+         class="archive-item">
+        <span class="archive-item-date">08-28</span>
+        <span class="archive-item-title">蝶葬</span>
+      </a><a
+         href="p/mei-lai-de-ji-ai.html"
+         class="archive-item">
+        <span class="archive-item-date">08-24</span>
+        <span class="archive-item-title">没来得及爱</span>
+      </a><a
+         href="p/xie-hou-hei-an-hua.html"
+         class="archive-item">
+        <span class="archive-item-date">05-10</span>
+        <span class="archive-item-title">邂逅黑暗花</span>
+      </a>
+    </div><div class="archive-year">
+    <h3 class="archive-year-title">2004</h3>
+    <div class="archive-posts">
+      <a
+         href="p/zhe-ge-nu-hai-bu-dong-zhe-ge-nan-hai.html"
+         class="archive-item">
+        <span class="archive-item-date">12-07</span>
+        <span class="archive-item-title">这个女孩不懂这个男孩</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="footer">
+      <p class="footer-text">© 2026 墨 Mo · 极简博客</p>
+    </footer>
+  </div>
+
+  <script>
+  (function() {
+    // 主题切换
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    var toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+  })();
+  </script>
+  
+  <script>
+  // 无限滚动加载 - 使用 textContent 防止 XSS
+  (function() {
+    var list = document.getElementById('postsList');
+    var loader = document.getElementById('loadMore');
+    if (!list || !loader) return;
+
+    var page = 1;
+    var perPage = 10;
+    var loading = false;
+    var allLoaded = !document.getElementById('loadMoreBtn');
+    var postsCache = null;
+
+    /**
+     * HTML 转义函数（客户端版）
+     */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function loadPosts() {
+      if (loading || allLoaded) return;
+      loading = true;
+      var btn = document.getElementById('loadMoreBtn');
+      if (btn) btn.classList.add('loading');
+
+      if (!postsCache) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/posts.json', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              postsCache = JSON.parse(xhr.responseText);
+              appendPosts();
+            } catch (e) {
+              loading = false;
+              if (btn) btn.classList.remove('loading');
+            }
+          } else {
+            loading = false;
+            if (btn) btn.classList.remove('loading');
+          }
+        };
+        xhr.onerror = function() {
+          loading = false;
+          if (btn) btn.classList.remove('loading');
+        };
+        xhr.send();
+      } else {
+        appendPosts();
+      }
+    }
+
+    function appendPosts() {
+      var start = page * perPage;
+      var end = start + perPage;
+      var items = postsCache.slice(start, end);
+      var btn = document.getElementById('loadMoreBtn');
+
+      if (items.length === 0) {
+        allLoaded = true;
+        loader.style.display = 'none';
+        loading = false;
+        return;
+      }
+
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < items.length; i++) {
+        var p = items[i];
+        var card = document.createElement('article');
+        card.className = 'post-card';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        
+        var link = document.createElement('a');
+        link.href = '/' + escapeHtml(p.url || '/');
+        link.className = 'post-link';
+        
+        var title = document.createElement('h3');
+        title.className = 'post-title';
+        title.textContent = p.title || '';
+        
+        var excerpt = document.createElement('p');
+        excerpt.className = 'post-excerpt';
+        excerpt.textContent = p.excerpt || '';
+        
+        link.appendChild(title);
+        link.appendChild(excerpt);
+        
+        var meta = document.createElement('div');
+        meta.className = 'post-meta';
+        
+        var date = document.createElement('span');
+        date.className = 'post-date';
+        date.textContent = p.date || '';
+        meta.appendChild(date);
+        
+        // if (p.categorySlug) {
+        //   var cat = document.createElement('a');
+        //   cat.href = '/c/' + escapeHtml(p.categorySlug) + '.html';
+        //   cat.className = 'post-category';
+        //   cat.textContent = p.category || '';
+        //   meta.appendChild(cat);
+        // }
+        
+        card.appendChild(link);
+        card.appendChild(meta);
+        frag.appendChild(card);
+      }
+      list.appendChild(frag);
+
+      requestAnimationFrame(function() {
+        var cards = list.querySelectorAll('.post-card');
+        for (var i = cards.length - items.length; i < cards.length; i++) {
+          (function(card, delay) {
+            setTimeout(function() {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, delay);
+          })(cards[i], (i - (cards.length - items.length)) * 60);
+        }
+      });
+
+      page++;
+      loading = false;
+      if (btn) btn.classList.remove('loading');
+
+      if (end >= postsCache.length) {
+        allLoaded = true;
+        loader.style.display = 'none';
+      }
+    }
+
+    var btn = document.getElementById('loadMoreBtn');
+    if (btn) btn.addEventListener('click', loadPosts);
+
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        var rect = loader.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 200) loadPosts();
+      }, 100);
+    });
+  })();
+  </script>
+</body>
+</html>

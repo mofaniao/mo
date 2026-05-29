@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue单页面与多页面区别及优点 - 墨 Mo · 极简博客</title>
+  <meta name="description" content="在Vue.js中，单页面应用（SPA）与多页面应用（MPA）的区别主要体现在页面数量和跳转方式以及组件化，具体如下： 1. 页面数量和跳转方式：SPA只有一个主页面，所有内容都包含在这个页面内，页面之间的转换实际上是不同组件的切换，只刷新局部资源。相反，MPA由多个独立页面组成，每个页面都需要...">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>墨</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="logo">
+          <span class="logo-char">墨</span>
+          <span class="logo-en">Mo</span>
+        </a>
+        <nav class="nav">
+          <a href="/" class="nav-link">首页</a>
+          <a href="/archive.html" class="nav-link">归档</a>
+          <a href="/about.html" class="nav-link">关于</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <a href="/categories.html" class="post-back">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="19" y1="12" x2="5" y2="12"></line>
+    <polyline points="12 19 5 12 12 5"></polyline>
+  </svg>
+  返回
+</a>
+
+<article class="post-detail">
+  <header class="post-detail-header">
+    <h1 class="post-detail-title">vue单页面与多页面区别及优点</h1>
+    <div class="post-detail-meta">
+      <span class="post-date">2024-03-29</span>
+      
+        <a href="/c/ji-shu.html" class="post-category">技术</a>
+      
+    </div>
+  </header>
+
+  <div class="post-detail-content">
+    <p>在Vue.js中，单页面应用（SPA）与多页面应用（MPA）的区别主要体现在<strong>页面数量和跳转方式以及组件化</strong>，具体如下：</p>
+<ol>
+<li><p><strong>页面数量和跳转方式</strong>：SPA只有一个主页面，所有内容都包含在这个页面内，页面之间的转换实际上是不同组件的切换，只刷新局部资源。相反，MPA由多个独立页面组成，每个页面都需要加载相应的资源，页面之间的跳转涉及到整页资源的刷新。</p>
+</li>
+<li><p><strong>组件化</strong>：SPA倾向于将不同功能模块化为组件，而MPA则可能涉及多个页面间的代码重复。</p>
+</li>
+</ol>
+<p>对于SPA的优点，主要表现在以下方面：</p>
+<ol>
+<li><p><strong>用户体验</strong>：SPA提供了更加流畅的用户体验，因为用户在使用过程中不需要等待整个页面的重新加载，只有必要数据的异步请求和局部UI的更新。</p>
+</li>
+<li><p><strong>前后端分离</strong>：SPA促进了前后端的分离，后端专注于API的实现，而前端负责展示逻辑，这样的架构清晰且易于管理。</p>
+</li>
+<li><p><strong>减轻服务器压力</strong>：由于SPA仅在初始加载时请求较大量的资源，后续交互主要通过Ajax进行数据获取，避免了每次操作都进行全页的请求，因此相对减少了服务器的压力。</p>
+</li>
+<li><p><strong>共用后端代码</strong>：SPA可以跨平台使用同一套后端代码，无论是Web、手机还是平板等设备，都可以利用相同的API接口进行数据交换。</p>
+</li>
+</ol>
+<p>总之，SPA与MPA的核心区别在于它们的页面组织方式和更新机制，而SPA的优点在于它为用户提供了更为连贯和快速的交互体验，同时也简化了开发过程，使得前后端可以更加独立地进行开发和优化。</p>
+
+  </div>
+
+  
+    <div class="post-detail-tags">
+      <a
+         href="/t/vue.html"
+         class="post-tag"># Vue</a><a
+         href="/t/bo-ke.html"
+         class="post-tag"># 博客</a><a
+         href="/t/qian-duan.html"
+         class="post-tag"># 前端</a>
+    </div>
+  
+
+  <nav class="post-nav">
+    
+      <a href="/p/shi-yong-iptables-fang-huo-qiang-ju-jue-guo-wai-ip-ping-bi-guo-wai-ip-fang-wen-fu-wu-qi.html" class="post-nav-item post-nav-prev">
+        <span class="post-nav-label">上一篇</span>
+        <span class="post-nav-title">使用iptables防火墙拒绝国外IP/屏蔽国外IP访问服务器</span>
+      </a>
+    
+    
+      <a href="/p/wei-xin-xiao-cheng-xu-qian-ru-ren-yi-gong-zhong-hao-wen-zhang.html" class="post-nav-item post-nav-next">
+        <span class="post-nav-label">下一篇</span>
+        <span class="post-nav-title">微信小程序嵌入任意公众号文章</span>
+      </a>
+    
+  </nav>
+</article>
+
+    </main>
+
+    <footer class="footer">
+      <p class="footer-text">© 2026 墨 Mo · 极简博客</p>
+    </footer>
+  </div>
+
+  <script>
+  (function() {
+    // 主题切换
+    var saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    var toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+  })();
+  </script>
+  
+  <script>
+  // 无限滚动加载 - 使用 textContent 防止 XSS
+  (function() {
+    var list = document.getElementById('postsList');
+    var loader = document.getElementById('loadMore');
+    if (!list || !loader) return;
+
+    var page = 1;
+    var perPage = 10;
+    var loading = false;
+    var allLoaded = !document.getElementById('loadMoreBtn');
+    var postsCache = null;
+
+    /**
+     * HTML 转义函数（客户端版）
+     */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function loadPosts() {
+      if (loading || allLoaded) return;
+      loading = true;
+      var btn = document.getElementById('loadMoreBtn');
+      if (btn) btn.classList.add('loading');
+
+      if (!postsCache) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/posts.json', true);
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              postsCache = JSON.parse(xhr.responseText);
+              appendPosts();
+            } catch (e) {
+              loading = false;
+              if (btn) btn.classList.remove('loading');
+            }
+          } else {
+            loading = false;
+            if (btn) btn.classList.remove('loading');
+          }
+        };
+        xhr.onerror = function() {
+          loading = false;
+          if (btn) btn.classList.remove('loading');
+        };
+        xhr.send();
+      } else {
+        appendPosts();
+      }
+    }
+
+    function appendPosts() {
+      var start = page * perPage;
+      var end = start + perPage;
+      var items = postsCache.slice(start, end);
+      var btn = document.getElementById('loadMoreBtn');
+
+      if (items.length === 0) {
+        allLoaded = true;
+        loader.style.display = 'none';
+        loading = false;
+        return;
+      }
+
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < items.length; i++) {
+        var p = items[i];
+        var card = document.createElement('article');
+        card.className = 'post-card';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        
+        var link = document.createElement('a');
+        link.href = '/' + escapeHtml(p.url || '/');
+        link.className = 'post-link';
+        
+        var title = document.createElement('h3');
+        title.className = 'post-title';
+        title.textContent = p.title || '';
+        
+        var excerpt = document.createElement('p');
+        excerpt.className = 'post-excerpt';
+        excerpt.textContent = p.excerpt || '';
+        
+        link.appendChild(title);
+        link.appendChild(excerpt);
+        
+        var meta = document.createElement('div');
+        meta.className = 'post-meta';
+        
+        var date = document.createElement('span');
+        date.className = 'post-date';
+        date.textContent = p.date || '';
+        meta.appendChild(date);
+        
+        // if (p.categorySlug) {
+        //   var cat = document.createElement('a');
+        //   cat.href = '/c/' + escapeHtml(p.categorySlug) + '.html';
+        //   cat.className = 'post-category';
+        //   cat.textContent = p.category || '';
+        //   meta.appendChild(cat);
+        // }
+        
+        card.appendChild(link);
+        card.appendChild(meta);
+        frag.appendChild(card);
+      }
+      list.appendChild(frag);
+
+      requestAnimationFrame(function() {
+        var cards = list.querySelectorAll('.post-card');
+        for (var i = cards.length - items.length; i < cards.length; i++) {
+          (function(card, delay) {
+            setTimeout(function() {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, delay);
+          })(cards[i], (i - (cards.length - items.length)) * 60);
+        }
+      });
+
+      page++;
+      loading = false;
+      if (btn) btn.classList.remove('loading');
+
+      if (end >= postsCache.length) {
+        allLoaded = true;
+        loader.style.display = 'none';
+      }
+    }
+
+    var btn = document.getElementById('loadMoreBtn');
+    if (btn) btn.addEventListener('click', loadPosts);
+
+    var scrollTimer;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function() {
+        var rect = loader.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 200) loadPosts();
+      }, 100);
+    });
+  })();
+  </script>
+</body>
+</html>
