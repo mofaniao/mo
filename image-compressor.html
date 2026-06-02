@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片压缩工具 · 在线图片压缩</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+SC:wght@300;400;600&display=swap');
+
+    :root {
+      --accent: #6366f1;
+      --accent-light: rgba(99,102,241,0.12);
+      --accent-glow: rgba(99,102,241,0.25);
+      --bg: #0f0f17;
+      --card-bg: #1a1a2e;
+      --card-border: #2a2a3e;
+      --input-bg: #12122a;
+      --text: #e8e6f0;
+      --text-muted: #7a7a9a;
+      --toggle-bg: #2a2a3e;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+      --shadow-hover: 0 8px 40px rgba(99,102,241,0.12);
+    }
+
+    [data-theme="light"] {
+      --bg: #f0f2f8;
+      --card-bg: #ffffff;
+      --card-border: #e2e5ef;
+      --input-bg: #f7f8fc;
+      --text: #1a1a2e;
+      --text-muted: #6a6d82;
+      --toggle-bg: #e2e5ef;
+      --shadow: 0 2px 16px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.06);
+      --shadow-hover: 0 8px 32px rgba(99,102,241,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', 'Inter', sans-serif;
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Theme Toggle ── */
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      z-index: 200;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid var(--card-border);
+      background: var(--card-bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { transform: scale(1.1); border-color: var(--accent); }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      padding: 60px 20px 32px;
+      width: 100%;
+    }
+    .header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ── Main Card ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 960px;
+      padding: 36px 32px;
+      margin: 0 16px 32px;
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* ── Drop Zone ── */
+    .drop-zone {
+      border: 2px dashed var(--card-border);
+      border-radius: 14px;
+      padding: 48px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .drop-zone:hover,
+    .drop-zone.drag-over {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .drop-icon { font-size: 48px; margin-bottom: 12px; }
+    .drop-title { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .drop-hint { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ── Settings Row ── */
+    .settings {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 24px;
+      align-items: flex-end;
+    }
+    .setting-group { flex: 1; min-width: 160px; }
+    .setting-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .setting-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    /* Range slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 99px;
+      background: var(--toggle-bg);
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 0 4px var(--accent-light);
+      transition: box-shadow 0.2s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 0 8px var(--accent-glow);
+    }
+
+    /* Format buttons */
+    .format-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .format-btn {
+      padding: 7px 16px;
+      border-radius: 9px;
+      border: 1.5px solid var(--card-border);
+      background: var(--input-bg);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .format-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+    .format-btn:hover:not(.active) { border-color: var(--text-muted); }
+
+    /* Dimension inputs */
+    .dim-row { display: flex; gap: 8px; align-items: center; }
+    .dim-input {
+      width: 80px;
+      padding: 8px 10px;
+      border-radius: 9px;
+      border: 1.5px solid var(--card-border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .dim-input:focus { border-color: var(--accent); }
+    .dim-lock {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1.5px solid var(--card-border);
+      background: var(--input-bg);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .dim-lock.locked { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+    /* Compress button */
+    .btn-compress {
+      margin-top: 28px;
+      width: 100%;
+      padding: 15px;
+      border-radius: 13px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(99,102,241,0.35);
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn-compress:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(99,102,241,0.45); }
+    .btn-compress:active { transform: translateY(0); }
+    .btn-compress:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ── Results ── */
+    .results-section { margin-top: 32px; }
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .results-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .results-actions { display: flex; gap: 8px; }
+    .btn-sm {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1.5px solid var(--card-border);
+      background: var(--input-bg);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .result-card {
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .result-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .result-preview {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      background: repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 16px 16px;
+      display: block;
+    }
+
+    .result-info { padding: 12px 14px; }
+    .result-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 8px;
+    }
+    .result-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .result-stats .saved {
+      font-weight: 700;
+      color: #22c55e;
+    }
+    .result-stats .saved.negative {
+      color: #ef4444;
+    }
+
+    .result-bar {
+      height: 6px;
+      border-radius: 99px;
+      background: var(--toggle-bg);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .result-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), #a855f7);
+      transition: width 0.5s ease;
+    }
+
+    .result-actions { display: flex; gap: 6px; }
+    .btn-download {
+      flex: 1;
+      padding: 7px 0;
+      border-radius: 8px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-download:hover { opacity: 0.85; }
+    .btn-preview {
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1.5px solid var(--card-border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-preview:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Preview Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.6);
+    }
+    .modal-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      z-index: 510;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close.visible { display: flex; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .card { padding: 24px 18px; }
+      .settings { gap: 14px; }
+      .results-grid { grid-template-columns: 1fr; }
+      .header { padding: 50px 16px 24px; }
+    }
+    @media (max-width: 480px) {
+      .card { margin: 0 10px 24px; padding: 20px 14px; }
+      .drop-zone { padding: 32px 14px; }
+      .dim-row { flex-wrap: wrap; }
+    }
+
+    /* Focus visible */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    button:focus:not(:focus-visible), input:focus:not(:focus-visible) { outline: none; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+    * { scrollbar-width: thin; scrollbar-color: var(--card-border) var(--bg); }
+
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 10px 22px;
+      border-radius: 11px;
+      border: 1px solid var(--card-border);
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 600;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="theme-toggle" aria-label="切换亮色/暗色模式">☀️</button>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🖼️ 图片压缩工具</h1>
+    <p>纯浏览器端压缩，图片不上传服务器，隐私安全</p>
+  </div>
+
+  <!-- Upload + Settings Card -->
+  <div class="card">
+    <!-- Drop Zone -->
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp,image/bmp" multiple>
+      <div class="drop-icon">📁</div>
+      <div class="drop-title">点击选择图片，或拖拽图片到此处</div>
+      <div class="drop-hint">支持 PNG / JPG / WebP / BMP，可多选</div>
+    </div>
+
+    <!-- Settings -->
+    <div class="settings">
+      <!-- Quality -->
+      <div class="setting-group" style="flex:1.5">
+        <div class="setting-label">压缩质量</div>
+        <div class="setting-value" id="quality-val">80%</div>
+        <input type="range" id="quality-slider" min="1" max="100" value="80">
+      </div>
+
+      <!-- Max Width -->
+      <div class="setting-group">
+        <div class="setting-label">最大宽度 (px)</div>
+        <div class="dim-row">
+          <input type="number" class="dim-input" id="max-width" placeholder="不限制" min="1" max="20000">
+        </div>
+      </div>
+
+      <!-- Max Height -->
+      <div class="setting-group">
+        <div class="setting-label">最大高度 (px)</div>
+        <div class="dim-row">
+          <input type="number" class="dim-input" id="max-height" placeholder="不限制" min="1" max="20000">
+        </div>
+      </div>
+
+      <!-- Output Format -->
+      <div class="setting-group">
+        <div class="setting-label">输出格式</div>
+        <div class="format-btns" id="format-btns">
+          <button class="format-btn active" data-fmt="original">原格式</button>
+          <button class="format-btn" data-fmt="image/jpeg">JPEG</button>
+          <button class="format-btn" data-fmt="image/png">PNG</button>
+          <button class="format-btn" data-fmt="image/webp">WebP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Compress Button -->
+    <button class="btn-compress" id="compress-btn" disabled>请先选择图片</button>
+  </div>
+
+  <!-- Results Card -->
+  <div class="card results-section" id="results-section" style="display:none">
+    <div class="results-header">
+      <div class="results-title" id="results-title">压缩结果 (0)</div>
+      <div class="results-actions">
+        <button class="btn-sm" id="btn-download-all">📦 全部下载</button>
+        <button class="btn-sm" id="btn-clear-results">🗑️ 清空</button>
+      </div>
+    </div>
+    <div class="results-grid" id="results-grid"></div>
+  </div>
+
+  <!-- Preview Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <img class="modal-img" id="modal-img" src="" alt="preview">
+  </div>
+  <button class="modal-close" id="modal-close">✕</button>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  // ── Theme Toggle ──
+  const THEME_KEY = 'img-compress-theme';
+  const toggleBtn = $('theme-toggle');
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    toggleBtn.textContent = t === 'light' ? '🌙' : '☀️';
+    toggleBtn.setAttribute('aria-label', t === 'light' ? '切换到暗色模式' : '切换到亮色模式');
+    localStorage.setItem(THEME_KEY, t);
+  }
+  const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+  applyTheme(savedTheme);
+  toggleBtn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+
+  // ── State ──
+  let selectedFiles = [];   // File objects
+  let results = [];          // { name, origBlob, compBlob, origSize, compSize, url }
+  let outputFormat = 'original';
+
+  // ── DOM refs ──
+  const dropZone    = $('drop-zone');
+  const fileInput   = $('file-input');
+  const qualitySlider = $('quality-slider');
+  const qualityVal  = $('quality-val');
+  const maxWidthInput = $('max-width');
+  const maxHeightInput = $('max-height');
+  const compressBtn  = $('compress-btn');
+  const resultsSection = $('results-section');
+  const resultsGrid   = $('results-grid');
+  const resultsTitle  = $('results-title');
+
+  // ── Quality slider ──
+  qualitySlider.addEventListener('input', () => {
+    qualityVal.textContent = qualitySlider.value + '%';
+  });
+
+  // ── Format buttons ──
+  $('format-btns').addEventListener('click', e => {
+    const btn = e.target.closest('.format-btn');
+    if (!btn) return;
+    document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    outputFormat = btn.dataset.fmt;
+  });
+
+  // ── Drop zone ──
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    handleFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+  function handleFiles(files) {
+    const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+    if (imageFiles.length === 0) { showToast('⚠️ 请选择图片文件'); return; }
+    selectedFiles = imageFiles;
+    compressBtn.disabled = false;
+    compressBtn.textContent = `⚡ 压缩 ${imageFiles.length} 张图片`;
+    showToast(`✅ 已选择 ${imageFiles.length} 张图片`);
+  }
+
+  // ── Compress ──
+  compressBtn.addEventListener('click', async () => {
+    if (selectedFiles.length === 0) return;
+    compressBtn.disabled = true;
+    compressBtn.textContent = '⏳ 压缩中...';
+    results = [];
+
+    for (const file of selectedFiles) {
+      try {
+        const compBlob = await compressImage(file);
+        // Auto-swap: if compressed is larger, keep original
+        let finalBlob = compBlob;
+        let skipped = false;
+        if (finalBlob.size >= file.size) {
+          finalBlob = file;
+          skipped = true;
+        }
+        const url = URL.createObjectURL(finalBlob);
+        results.push({
+          name: file.name,
+          origBlob: file,
+          compBlob: finalBlob,
+          origSize: file.size,
+          compSize: finalBlob.size,
+          url,
+          skipped
+        });
+      } catch (err) {
+        console.error('Compress error:', err);
+        showToast(`❌ ${file.name} 压缩失败`);
+      }
+    }
+
+    renderResults();
+    compressBtn.disabled = false;
+    compressBtn.textContent = `⚡ 压缩 ${selectedFiles.length} 张图片`;
+    const totalOrig = results.reduce((s, r) => s + r.origSize, 0);
+    const totalComp = results.reduce((s, r) => s + r.compSize, 0);
+    const pct = totalOrig > 0 ? ((1 - totalComp / totalOrig) * 100).toFixed(1) : 0;
+    showToast(`✅ 压缩完成！总体积 ${formatSize(totalOrig)} → ${formatSize(totalComp)}，节省 ${pct}%`);
+  });
+
+  function compressImage(file) {
+    return new Promise((resolve, reject) => {
+      // If original format and no resize needed, return original directly (no re-encoding)
+      const needResize =
+        (parseInt(maxWidthInput.value) || Infinity) < Infinity ||
+        (parseInt(maxHeightInput.value) || Infinity) < Infinity;
+      const fmt = outputFormat === 'original' ? file.type : outputFormat;
+      const isOriginalFmt = outputFormat === 'original' || fmt === file.type;
+      if (isOriginalFmt && !needResize) {
+        // No format change, no resize → return original (avoid re-encoding)
+        resolve(file);
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => {
+        // Determine output format
+        let fmt2 = outputFormat === 'original' ? file.type : outputFormat;
+        if (!['image/jpeg','image/png','image/webp'].includes(fmt2)) fmt2 = 'image/jpeg';
+
+        // Compute target dimensions
+        let w = img.naturalWidth;
+        let h = img.naturalHeight;
+        const maxW = parseInt(maxWidthInput.value) || Infinity;
+        const maxH = parseInt(maxHeightInput.value) || Infinity;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        if (h > maxH) { w = Math.round(w * maxH / h); h = maxH; }
+        w = Math.max(1, w); h = Math.max(1, h);
+
+        // Draw to canvas
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+
+        // Export — PNG ignores quality, so skip passing it for PNG
+        const quality = qualitySlider.value / 100;
+        const useQuality = fmt2 === 'image/png' ? undefined : quality;
+        canvas.toBlob(blob => {
+          if (blob) resolve(blob);
+          else reject(new Error('canvas.toBlob returned null'));
+        }, fmt2, useQuality);
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  // ── Render Results ──
+  function renderResults() {
+    if (results.length === 0) { resultsSection.style.display = 'none'; return; }
+    resultsSection.style.display = '';
+    resultsTitle.textContent = `压缩结果 (${results.length})`;
+    resultsGrid.innerHTML = '';
+
+    results.forEach((r, i) => {
+      const pct = r.origSize > 0 ? ((1 - r.compSize / r.origSize) * 100) : 0;
+      const savedClass = pct >= 0 ? 'saved' : 'saved negative';
+      const skippedBadge = r.skipped ? '<span style="color:#f59e0b;font-size:0.7rem;margin-left:6px;">⚠️ 未压缩（原文件更小）</span>' : '';
+      const card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML = `
+        <img class="result-preview" src="${r.url}" alt="${escapeHtml(r.name)}">
+        <div class="result-info">
+          <div class="result-name" title="${escapeHtml(r.name)}">${escapeHtml(r.name)}${skippedBadge}</div>
+          <div class="result-stats">
+            <span>${formatSize(r.origSize)} → ${formatSize(r.compSize)}</span>
+            <span class="${savedClass}">${r.skipped ? '─' : (pct >= 0 ? '↓' : '↑')} ${Math.abs(pct).toFixed(1)}%</span>
+          </div>
+          <div class="result-bar"><div class="result-bar-fill" style="width:${Math.min(100, r.compSize / r.origSize * 100)}%"></div></div>
+          <div class="result-actions">
+            <button class="btn-download" data-idx="${i}">📥 下载</button>
+            <button class="btn-preview" data-idx="${i}">🔍 预览</button>
+          </div>
+        </div>`;
+      resultsGrid.appendChild(card);
+    });
+
+    // Event delegation
+    resultsGrid.onclick = e => {
+      const idx = e.target.closest('[data-idx]')?.dataset.idx;
+      if (idx === undefined) return;
+      if (e.target.classList.contains('btn-download')) downloadResult(parseInt(idx));
+      if (e.target.classList.contains('btn-preview')) openPreview(parseInt(idx));
+    };
+  }
+
+  // ── Download ──
+  function downloadResult(idx) {
+    const r = results[idx];
+    if (!r) return;
+    const a = document.createElement('a');
+    a.href = r.url;
+    // Determine extension
+    let ext = r.name.includes('.') ? r.name.split('.').pop() : 'jpg';
+    if (outputFormat !== 'original') {
+      ext = { 'image/jpeg':'jpg', 'image/png':'png', 'image/webp':'webp' }[outputFormat] || 'jpg';
+    }
+    const baseName = r.name.includes('.') ? r.name.substring(0, r.name.lastIndexOf('.')) : r.name;
+    a.download = `${baseName}_compressed.${ext}`;
+    a.click();
+  }
+
+  $('btn-download-all').addEventListener('click', () => {
+    results.forEach((_, i) => downloadResult(i));
+  });
+
+  $('btn-clear-results').addEventListener('click', () => {
+    results.forEach(r => URL.revokeObjectURL(r.url));
+    results = [];
+    renderResults();
+    showToast('🗑️ 已清空结果');
+  });
+
+  // ── Preview Modal ──
+  function openPreview(idx) {
+    const r = results[idx];
+    if (!r) return;
+    $('modal-img').src = r.url;
+    $('modal-overlay').classList.add('visible');
+    $('modal-close').classList.add('visible');
+  }
+  $('modal-overlay').addEventListener('click', closePreview);
+  $('modal-close').addEventListener('click', closePreview);
+  function closePreview() {
+    $('modal-overlay').classList.remove('visible');
+    $('modal-close').classList.remove('visible');
+  }
+
+  // ── Utils ──
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(2) + ' MB';
+  }
+  function escapeHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+  function showToast(msg) {
+    const el = $('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => el.classList.remove('show'), 2500);
+  }
+</script>
+</body>
+</html>
