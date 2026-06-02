@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>格物觉醒 · 50个顶级智慧思维</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;600&display=swap');
+
+    :root {
+      --bg: #0a0a0f;
+      --card-bg: #12121a;
+      --card-border: #1e1e2e;
+      --text-primary: #e8e6e1;
+      --text-secondary: #8a8a9a;
+      --text-dim: #55556a;
+
+      --s1: #4facfe;
+      --s2: #f6d365;
+      --s3: #43e97b;
+      --s4: #ff6b9d;
+      --s5: #c471ed;
+
+      --s1-glow: rgba(79, 172, 254, 0.15);
+      --s2-glow: rgba(246, 211, 101, 0.15);
+      --s3-glow: rgba(67, 233, 123, 0.15);
+      --s4-glow: rgba(255, 107, 157, 0.15);
+      --s5-glow: rgba(196, 113, 237, 0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Noto Sans SC', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 背景粒子 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 10%, rgba(79,172,254,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(196,113,237,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 50% 50%, rgba(255,107,157,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 顶部导航 */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 0 40px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-title {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--s1), var(--s5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-stats {
+      font-size: 13px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+    }
+
+    /* 主容器 */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 40px 80px;
+    }
+
+    /* 头部 */
+    .hero {
+      text-align: center;
+      padding: 60px 0 80px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 50px;
+      border: 1px solid rgba(196,113,237,0.3);
+      background: rgba(196,113,237,0.08);
+      font-size: 12px;
+      color: var(--s5);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 30%, #aaa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 4px;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .hero-sub em {
+      color: var(--s5);
+      font-style: normal;
+    }
+
+    /* 阶段分隔线 */
+    .stage-divider {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin: 70px 0 40px;
+    }
+
+    .stage-divider::before,
+    .stage-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--card-border), transparent);
+    }
+
+    .stage-tag {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 700;
+      padding: 8px 28px;
+      border-radius: 8px;
+      border: 1px solid;
+      white-space: nowrap;
+      letter-spacing: 3px;
+    }
+
+    .stage-tag.s1 { color: var(--s1); border-color: rgba(79,172,254,0.3); background: var(--s1-glow); }
+    .stage-tag.s2 { color: var(--s2); border-color: rgba(246,211,101,0.3); background: var(--s2-glow); }
+    .stage-tag.s3 { color: var(--s3); border-color: rgba(67,233,123,0.3); background: var(--s3-glow); }
+    .stage-tag.s4 { color: var(--s4); border-color: rgba(255,107,157,0.3); background: var(--s4-glow); }
+    .stage-tag.s5 { color: var(--s5); border-color: rgba(196,113,237,0.3); background: var(--s5-glow); }
+
+    .stage-meta {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+    }
+
+    /* 卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* 单卡片 */
+    .card {
+      position: relative;
+      perspective: 1200px;
+      cursor: pointer;
+      height: 220px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      border-radius: 16px;
+    }
+
+    .card:hover .card-inner,
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+    }
+
+    /* 卡片正面 */
+    .card-front {
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      padding: 28px 28px 24px;
+      transition: border-color 0.3s;
+    }
+
+    .card:hover .card-front {
+      border-color: var(--accent);
+    }
+
+    .card-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 50%, white) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0.7;
+    }
+
+    .card-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .card-tagline {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 16px;
+      letter-spacing: 1px;
+    }
+
+    .card-hint svg { opacity: 0.5; }
+
+    /* 卡片背面 */
+    .card-back {
+      background: var(--card-bg);
+      transform: rotateY(180deg);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-back::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    .back-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .back-content {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+
+    .back-content strong {
+      color: var(--text-primary);
+    }
+
+    /* 底部 */
+    footer {
+      text-align: center;
+      padding: 60px 40px 80px;
+      color: var(--text-dim);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    footer p { margin-bottom: 8px; }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      main { padding: 70px 16px 60px; }
+      nav { padding: 0 16px; }
+      .card-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .card { height: 200px; }
+      .card-num { font-size: 36px; }
+      .card-title { font-size: 16px; }
+      .hero { padding: 40px 0 60px; }
+    }
+
+    @media (max-width: 480px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
+
+    /* 加载动画 */
+    .card {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 滚动条 */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+
+    /* 阶段色变 */
+    .card[data-stage="1"] { --accent: var(--s1); }
+    .card[data-stage="2"] { --accent: var(--s2); }
+    .card[data-stage="3"] { --accent: var(--s3); }
+    .card[data-stage="4"] { --accent: var(--s4); }
+    .card[data-stage="5"] { --accent: var(--s5); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-title">格物觉醒</div>
+  <div class="nav-stats">50 个顶级智慧思维模型</div>
+</nav>
+
+<main>
+
+  <div class="hero">
+    <div class="hero-badge">格物心法 · Mind Models</div>
+    <h1>50个顶级智慧思维</h1>
+    <p class="hero-sub">
+      认知地基 → 决策优化 → 系统洞察 → 博弈概率 → 智慧圆融<br>
+      从<em>看见</em>到<em>看透</em>，从<em>知道</em>到<em>做到</em>
+    </p>
+  </div>
+
+  <!-- 第一阶 -->
+  <div class="stage-divider">
+    <div class="stage-tag s1">第一阶</div>
+  </div>
+  <div class="stage-meta">清扫心智 · 建立认知地基</div>
+  <div class="card-grid">
+
+    <div class="card" data-stage="1" style="animation-delay:0.05s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">01</div>
+          <div class="card-title">能力圈</div>
+          <div class="card-tagline">只在你的地盘里称王</div>
+          <div class="card-hint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+            翻转查看详情
+          </div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>知道边界在哪里，比能力本身更重要。</strong><br>
+            每个人都有自己的"能力圈"——那些你真正擅长、能持续做好的事。<br>
+            待在圈内是聪明，承认圈外是智慧，<strong>不断扩展圈</strong>才是成长。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.08s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">02</div>
+          <div class="card-title">奥卡姆剃刀</div>
+          <div class="card-tagline">一刀砍掉99%的复杂念头</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>如无必要，勿增实体。</strong><br>
+            面对复杂问题时，把不必要的假设、概念、变量全部剔除，<strong>最简单的解释往往最接近真相。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.11s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">03</div>
+          <div class="card-title">第一性原理</div>
+          <div class="card-tagline">穿透表象，直抵问题之核</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>把问题拆到不能再拆，找到最底层的"原子事实"。</strong><br>
+            不依赖类比和经验，而是从物理、化学、经济学的<strong>基本公理</strong>出发重新构建思考。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.14s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">04</div>
+          <div class="card-title">邓宁-克鲁格效应</div>
+          <div class="card-tagline">跪着爬出"愚昧之巅"</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>越无知的人，越自信；越智慧的人，越谦逊。</strong><br>
+            人的认知分四个阶段：愚昧之峰 → 绝望之谷 → 启蒙之坡 → 持续平稳高原。<br>
+            <strong>知道自己不知道，是觉醒的开始。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.17s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">05</div>
+          <div class="card-title">汉隆的剃刀</div>
+          <div class="card-tagline">能解释为愚蠢，就别归结为恶意</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>"他一定是故意的"——这句话，往往是认知的最大陷阱。</strong><br>
+            绝大多数坏事来自<strong>能力不足、疏忽、认知局限</strong>，而非他人刻意针对你。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.20s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">06</div>
+          <div class="card-title">确认偏误模型</div>
+          <div class="card-tagline">你只相信你愿意相信的</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>每个人都戴着有色眼镜看世界，并坚信那是真相。</strong><br>
+            大脑天然倾向寻找<strong>支持已有信念的证据</strong>，忽略反驳的证据。<br>
+            主动搜索"反对意见"，是打破偏误的第一步。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.23s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">07</div>
+          <div class="card-title">可证伪性模型</div>
+          <div class="card-tagline">什么是真正的"知识"</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>可以被证明是错的，才叫知识；无法被反驳的，叫信仰。</strong><br>
+            真正的科学理论，必须提出<strong>可以被事实推翻的可能性</strong>——这才是科学与玄学的分界线。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.26s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">08</div>
+          <div class="card-title">稻草人谬误</div>
+          <div class="card-tagline">别和你幻想出来的敌人作战</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>把对方的论点曲解成一个更容易攻击的版本，然后宣布自己赢了。</strong><br>
+            这不是在辩论，而是在<strong>打倒一个你自己竖起的稻草人</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.29s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">09</div>
+          <div class="card-title">滑坡谬误模型</div>
+          <div class="card-tagline">一根针如何被夸大成世界末日</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>"如果允许A，就会依次导致Z"的逻辑链，往往经不起推敲。</strong><br>
+            每一步都需要独立证明，<strong>每一步的因果关系都可能被截断</strong>。拒绝没有根据的连锁推演。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="1" style="animation-delay:0.32s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">10</div>
+          <div class="card-title">诉诸权威谬误</div>
+          <div class="card-tagline">再大的光环，也不能替代思考</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>权威说的是对的，不代表他说的"因为A所以B"是对的。</strong><br>
+            承认权威的专业性，但<strong>永远保留独立验证的权力</strong>。权威也会犯错，且错误时危害更大。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /第一阶卡片网格 -->
+
+  <!-- 第二阶 -->
+  <div class="stage-divider">
+    <div class="stage-tag s2">第二阶</div>
+  </div>
+  <div class="stage-meta">决策模型 · 优化人生选择</div>
+  <div class="card-grid">
+
+    <div class="card" data-stage="2" style="animation-delay:0.05s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">11</div>
+          <div class="card-title">逆向思维</div>
+          <div class="card-tagline">以终为始，倒推出你的成功路线</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>不要问"我要怎么做才能成功"，而问"什么样的行为一定会导致失败，然后避免它"。</strong><br>
+            查理·芒格说：我只要知道我会死在哪里，就永远不去那里。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.08s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">12</div>
+          <div class="card-title">第二序思维</div>
+          <div class="card-tagline">多想一步，看见别人看不见的</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>大多数人的问题不在于"怎么做"，而在于"这个问题本身能不能被重新定义"。</strong><br>
+            第一序思考：如何改变现状？<br>
+            <strong>第二序思考：能不能改变"改变现状"这件事本身？</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.11s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">13</div>
+          <div class="card-title">帕累托法则</div>
+          <div class="card-tagline">用20%的力，撬动80%的成果</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>大多数成果，来自少数关键投入。</strong><br>
+            找到你人生和工作中那<strong>20%的关键动作</strong>，把80%的精力聚焦在上面，其余的——授权、放弃、或忽略。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.14s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">14</div>
+          <div class="card-title">机会成本模型</div>
+          <div class="card-tagline">你选的，和你放弃的，同样重要</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>每一个"是"都是对无数"否"的承诺。</strong><br>
+            选A的真正成本，是你本可以用同样的时间和资源去做的事情中，<strong>价值最高的那一个</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.17s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">15</div>
+          <div class="card-title">决策矩阵模型</div>
+          <div class="card-tagline">让你的理智，为你的直觉打分</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>给每个选项打分：列出关键因素，赋予权重，逐项打分。</strong><br>
+            直觉告诉你选A，分析告诉你选B——<strong>用矩阵把两者都纳入考量</strong>，减少拍脑袋的错误。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.20s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">16</div>
+          <div class="card-title">沉没成本谬误</div>
+          <div class="card-tagline">别为了打翻的牛奶而哭泣</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>已经沉没的，不是成本。能决定未来的，才是成本。</strong><br>
+            继续一个错误的决定，唯一的理由是<strong>"如果现在停止，损失会更大"</strong>，而不是"我已经投入太多了"。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.23s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">17</div>
+          <div class="card-title">舒适区模型</div>
+          <div class="card-tagline">在"学习区"的边缘，实现跃迁</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>成长只发生在舒适区之外，恐慌区之内——也就是"学习区"。</strong><br>
+            太舒服则停滞，太恐慌则崩溃。<strong>持续在能力边界磨炼</strong>，才是最快的成长路径。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.26s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">18</div>
+          <div class="card-title">安全边际模型</div>
+          <div class="card-tagline">为你的所有决策，都装上安全气囊</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>永远不要把计划定在刚好能成功的位置。</strong><br>
+            修桥时多造两成的承重，投资时留足现金流——<strong>在"足够好"和"刚好够"之间，留出容错空间</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.29s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">19</div>
+          <div class="card-title">双曲贴现模型</div>
+          <div class="card-tagline">如何战胜那个"短视"的自己</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>人类天然高估眼前的快乐，低估未来的代价。</strong><br>
+            解决办法：<strong>提前承诺机制</strong>（自动储蓄、冷冻期）、把大目标拆成当下的小行动。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="2" style="animation-delay:0.32s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">20</div>
+          <div class="card-title">框架效应模型</div>
+          <div class="card-tagline">换个说法，就能改变一个人的选择</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>同一件事，不同的表达方式，会引发完全不同的感受和决策。</strong><br>
+            "手术成功率90%" vs "手术死亡率10%"——<strong>信息没变，框架变了，结果就变了</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /第二阶卡片网格 -->
+
+  <!-- 第三阶 -->
+  <div class="stage-divider">
+    <div class="stage-tag s3">第三阶</div>
+  </div>
+  <div class="stage-meta">系统思维 · 洞察万物之联</div>
+  <div class="card-grid">
+
+    <div class="card" data-stage="3" style="animation-delay:0.05s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">21</div>
+          <div class="card-title">系统思维模型</div>
+          <div class="card-tagline">世界不是积木，而是一张活的网</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>看局部只能治标，看系统才能治本。</strong><br>
+            一个房间乱——是收拾习惯的问题；<br>
+            十个房间乱——是空间设计的问题；<br>
+            <strong>永远问："更大的系统里，还有什么？" </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.08s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">22</div>
+          <div class="card-title">反馈循环模型</div>
+          <div class="card-tagline">看懂"滚雪球"与"踩刹车"</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>增强回路让好变更好、坏变更坏；调节回路则试图恢复平衡。</strong><br>
+            识别你身边的正反馈（口碑传播、复利）和负反馈（资源枯竭），<strong>顺势强化，逆势干预</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.11s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">23</div>
+          <div class="card-title">临界质量模型</div>
+          <div class="card-tagline">从量变到质变的那个引爆点</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>很多事情在临界点之前几乎看不到进展，一旦突破则势不可挡。</strong><br>
+            品牌口碑、内容积累、技能打磨——<strong>不要因为看不到结果就放弃，你可能在临界点之前。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.14s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">24</div>
+          <div class="card-title">瓶颈理论模型</div>
+          <div class="card-tagline">你的高度，取决于你最短的那块板</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>提升全局的最快方法，是找到并解决那个最弱的环节。</strong><br>
+            不要平均用力，<strong>把时间优先投入在限制你的那一个因素上</strong>，其余的暂时放过。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.17s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">25</div>
+          <div class="card-title">公地悲剧模型</div>
+          <div class="card-tagline">为何"人人为我"最终"无人为我"</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>公共资源若无人负责，必然被过度消耗直到枯竭。</strong><br>
+            解决方案：明确产权、制定规则、建立激励。<strong>对个人而言，警惕"谁都能用=谁都不珍惜"的项目。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.20s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">26</div>
+          <div class="card-title">涌现效应模型</div>
+          <div class="card-tagline">1+1为何会大于2，甚至大于100</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>当系统中的个体以正确方式组合，会产生个体完全没有的性质。</strong><br>
+            水有氢和氧都没有的流动性，大脑有单个神经元没有的意识。<strong>关注组合方式，而非堆砌要素。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.23s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">27</div>
+          <div class="card-title">路径依赖模型</div>
+          <div class="card-tagline">第一步，如何决定了你最终的命运</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>一旦进入某条路径，改变的成本会越来越高，哪怕那条路并不最优。</strong><br>
+            第一份工作、第一段婚姻、第一个平台——<strong>进入之前三思，进入之后勇于止损</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.26s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">28</div>
+          <div class="card-title">租值耗散模型</div>
+          <div class="card-tagline">无主的宝藏，为何会引来毁灭</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>当一项资源没有明确的主人，人们会争相抢占，直到其价值被耗尽。</strong><br>
+            明确归属、建立规则、设计激励——<strong>好的制度能把租值留住，坏的制度让人在争夺中耗尽它。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.29s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">29</div>
+          <div class="card-title">熵增定律模型</div>
+          <div class="card-tagline">万物从有序到混乱的终极宿命</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>没有外部能量注入，系统必然趋向混乱。</strong><br>
+            房间不整理就乱，关系不维护就淡，身体不锻炼就弱。<strong>对抗熵增需要持续输入能量——主动、有意识的努力。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="3" style="animation-delay:0.32s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">30</div>
+          <div class="card-title">还原论与整体论</div>
+          <div class="card-tagline">既要见树木，更要见森林</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>还原论：拆解到最小单元找答案。</strong><br>
+            <strong>整体论：放到大系统中找意义。</strong><br>
+            两者不是对立的——会拆解的人，也要有能力<strong>把碎片重新拼回全局</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /第三阶卡片网格 -->
+
+  <!-- 第四阶 -->
+  <div class="stage-divider">
+    <div class="stage-tag s4">第四阶</div>
+  </div>
+  <div class="stage-meta">博弈与概率 · 驾驭不确定性</div>
+  <div class="card-grid">
+
+    <div class="card" data-stage="4" style="animation-delay:0.05s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">31</div>
+          <div class="card-title">概率思维模型</div>
+          <div class="card-tagline">世界不是"是或否"，而是"可能性"</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>告别"一定会成功/一定会失败"的二元思维。</strong><br>
+            每件事都有一个概率区间。<strong>持续做高概率正确的决策</strong>，哪怕偶尔失败，长期结果依然会好。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.08s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">32</div>
+          <div class="card-title">贝叶斯定理</div>
+          <div class="card-tagline">用新信息，不断校准你的信念</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>先有一个初始判断（先验），新证据来了，就更新它（后验）。</strong><br>
+            不要非黑即白，不要锚定旧观点不放。<strong>随着信息更新，概率判断也应该动态调整。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.11s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">33</div>
+          <div class="card-title">幸存者偏差</div>
+          <div class="card-tagline">你看到的成功，只是冰山一角</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>成功者的故事被放大，失败者的教训被埋葬。</strong><br>
+            向成功者学习，也要向失败者学习。<strong>问问"那些没成功的，是怎么失败的？"——这才是更重要的答案。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.14s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">34</div>
+          <div class="card-title">囚徒困境模型</div>
+          <div class="card-tagline">为何我们常常做出"双输"的选择</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>个人最优，往往不是集体最优。</strong><br>
+            破解之道：重复博弈、建立信任、引入外部惩罚机制。<strong>单次博弈靠背叛，反复博弈靠合作。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.17s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">35</div>
+          <div class="card-title">信息不对称</div>
+          <div class="card-tagline">他知道的，你不知道，就是他的优势</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>交易中信息更充分的一方，往往能占更大便宜。</strong><br>
+            逆向选择和道德风险，都源于信息不对称。<br>
+            <strong>主动搜集信息、寻找第三方验证，是每个成年人的必修课。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.20s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">36</div>
+          <div class="card-title">信号理论模型</div>
+          <div class="card-tagline">你做的，比你说的，更能传递信息</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>真正有价值的信号，往往是付出代价之后才能传递的。</strong><br>
+            免费承诺不等于真承诺。<strong>看一个人愿意为此放弃什么、投入什么</strong>，才是判断的可靠依据。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.23s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">37</div>
+          <div class="card-title">零和博弈与非零和博弈</div>
+          <div class="card-tagline">是抢蛋糕，还是把蛋糕做大</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>零和：你多他就少，他赢你就输。</strong><br>
+            <strong>非零和：合作可以创造新的增量，双方都受益。</strong><br>
+            遇到冲突时，先问：这是零和还是非零和？<strong>很多"对手"其实是潜在的"伙伴"。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.26s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">38</div>
+          <div class="card-title">黑天鹅事件</div>
+          <div class="card-tagline">如何面对那些不可预测的巨大冲击</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>无法预测，但可以防备；无法避免，但可以应对。</strong><br>
+            分散风险、建立冗余、保持流动性——<strong>不是为了防止黑天鹅，而是为了黑天鹅来临时，你还站着。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.29s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">39</div>
+          <div class="card-title">反脆弱模型</div>
+          <div class="card-tagline">拥抱波动，在不确定性中变得更强</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>脆弱的东西在波动中崩溃；反脆弱的东西在波动中成长。</strong><br>
+            过度稳定、过度保护，反而让人变脆弱。<strong>适度压力+充分恢复=越来越强。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="4" style="animation-delay:0.32s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">40</div>
+          <div class="card-title">遍历性模型</div>
+          <div class="card-tagline">赌场的概率，不是你人生的概率</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>赌场可以重复万次，只要概率占优就稳赚；人只能活一次，"平均结果"对你毫无意义。</strong><br>
+            你的概率分布，和群体的概率分布，是两回事。<strong>押注之前，想清楚自己承担的是哪一端的风险。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /第四阶卡片网格 -->
+
+  <!-- 第五阶 -->
+  <div class="stage-divider">
+    <div class="stage-tag s5">第五阶</div>
+  </div>
+  <div class="stage-meta">智慧圆融 · 活出通透人生</div>
+  <div class="card-grid">
+
+    <div class="card" data-stage="5" style="animation-delay:0.05s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">41</div>
+          <div class="card-title">地图不等于疆域</div>
+          <div class="card-tagline">别把模型，当成了真实的世界</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>地图是帮助导航的工具，不是地形本身。</strong><br>
+            再好的思维模型、经济学理论、管理框架，都是对现实的<strong>简化</strong>。保持谦逊，随时准备接受"模型错了，地形才是对的"。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.08s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">42</div>
+          <div class="card-title">均值回归模型</div>
+          <div class="card-tagline">爬得越高，摔得越狠？回归是必然</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>极端表现之后，无论好坏，大概率会向均值回归。</strong><br>
+            连续大赚别飘，连续大亏别崩。<strong>一次超常发挥不代表实力，一次失误也不代表水平</strong>——长期观察，才能看清真相。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.11s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">43</div>
+          <div class="card-title">阿西莫夫定律</div>
+          <div class="card-tagline">短期高估科技，长期低估变革</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>一项新技术出现时，人们往往短期高估它的影响，长期低估它的影响。</strong><br>
+            不要因为一个热点就All in，也不要因为一时没动静就忽略它。<strong>用5-10年的眼光看变化。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.14s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">44</div>
+          <div class="card-title">冗余备份模型</div>
+          <div class="card-tagline">关键时刻，能救你命的备用降落伞</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>系统越复杂，越依赖备份。</strong><br>
+            重要文件多地备份，核心能力多条腿走路，关键关系多维护几个。<strong>冗余不是浪费，是活下去的保险费。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.17s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">45</div>
+          <div class="card-title">非对称作战</div>
+          <div class="card-tagline">用你的优势，去攻击别人的劣势</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>不要正面硬刚，用自己最大的优势，攻击对手最脆弱的地方。</strong><br>
+            大卫战胜歌利亚，不是靠更强壮，而是靠<strong>用对了策略和工具</strong>。弱小不是劣势，不会用才是。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.20s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">46</div>
+          <div class="card-title">能力涌现模型</div>
+          <div class="card-tagline">技能的叠加，会产生全新的物种</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>单一技能有天花板，技能交叉处有金矿。</strong><br>
+            写作+心理学=内容营销；编程+设计=产品设计；销售+技术=解决方案顾问。<strong>不要只精通一件事，把相关能力连接起来。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.23s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">47</div>
+          <div class="card-title">复利效应模型</div>
+          <div class="card-tagline">世界第八大奇迹，属于有耐心的人</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>利滚利，时间越长，威力越大。初期几乎看不见增长，但过了临界点就势不可挡。</strong><br>
+            健康、认知、关系、财富——<strong>所有值得做的事，都是复利游戏。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.26s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">48</div>
+          <div class="card-title">双重束缚理论</div>
+          <div class="card-tagline">让你"怎么做都是错"的沟通魔咒</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>当对方同时给你两个相互矛盾的要求，无论你怎么做都是错的。</strong><br>
+            识别双重束缚，是脱离精神控制的第一步。<strong>当发现自己"怎么做都不对"时，先退出来，重新审视规则本身。</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.29s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">49</div>
+          <div class="card-title">控制二分法</div>
+          <div class="card-tagline">管好你能管的，接受你不能管的</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>斯多葛学派的核心智慧：区分你能控制的，和你不能控制的，然后把精力全部放在前者。</strong><br>
+            他人的看法、已经发生的事、外部的环境——<strong>这些你控制不了</strong>。你的反应、你的选择、你的行动——<strong>这些你可以控制</strong>。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-stage="5" style="animation-delay:0.32s">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="card-num">50</div>
+          <div class="card-title">影响力圈模型</div>
+          <div class="card-tagline">从"关我屁事"到"关你屁事"</div>
+          <div class="card-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>翻转查看详情</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="back-label">核心洞见</div>
+          <div class="back-content">
+            <strong>最清醒的人生，是把精力放在影响力圈内——那里才是真正创造改变的地方。</strong><br>
+            影响力圈之外的事，要么<strong>接纳</strong>，要么<strong>离开</strong>，不要在中间地带内耗。
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /第五阶卡片网格 -->
+
+</main>
+
+<footer>
+  <p>格物觉醒 · 50个顶级智慧思维模型</p>
+  <p>来源：《格物心法》诺亚书房 · 认知 · 决策 · 系统 · 博弈 · 智慧</p>
+</footer>
+
+<script>
+  // 支持点击卡片翻转（移动端没有hover）
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+    });
+  });
+
+  // 入场动画交错
+  document.querySelectorAll('.card').forEach((card, i) => {
+    card.style.animationDelay = `${i * 0.04}s`;
+  });
+
+  // 平滑滚动到阶段
+  document.querySelectorAll('.stage-tag').forEach(tag => {
+    tag.style.cursor = 'pointer';
+    tag.addEventListener('click', () => {
+      tag.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+</script>
+
+</body>
+</html>

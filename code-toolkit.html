@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>代码工具箱 - 压缩·格式化·加密·混淆</title>
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --accent-light: #eef2ff;
+      --danger: #ef4444;
+      --success: #10b981;
+      --input-bg: #f9fafb;
+      --toggle-bg: #e5e7eb;
+      --toggle-thumb: #ffffff;
+      --shadow: 0 4px 24px rgba(99,102,241,0.10);
+      --shadow-lg: 0 8px 40px rgba(99,102,241,0.16);
+    }
+    [data-theme="dark"] {
+      --bg: #0f0f1a;
+      --card-bg: #1a1a2e;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #2d2d4e;
+      --accent: #818cf8;
+      --accent-hover: #6366f1;
+      --accent-light: #1e1e3a;
+      --danger: #f87171;
+      --success: #34d399;
+      --input-bg: #0f0f1a;
+      --toggle-bg: #2d2d4e;
+      --toggle-thumb: #818cf8;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 16px 60px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .theme-btn {
+      position: fixed; top: 20px; right: 20px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 20px; box-shadow: var(--shadow);
+      transition: all 0.2s; z-index: 100;
+    }
+    .theme-btn:hover { transform: scale(1.1); box-shadow: var(--shadow-lg); }
+    .card {
+      background: var(--card-bg); border-radius: 20px;
+      box-shadow: var(--shadow-lg); padding: 40px 36px;
+      width: 100%; max-width: 680px; border: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .card-header { text-align: center; margin-bottom: 28px; }
+    .card-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+    h1 {
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle { color: var(--text-muted); font-size: 0.88rem; margin-top: 6px; }
+
+    /* ── Language Tabs ── */
+    .lang-tabs {
+      display: flex; gap: 6px; margin-bottom: 20px;
+      background: var(--input-bg); border-radius: 12px; padding: 4px;
+      border: 1px solid var(--border);
+    }
+    .lang-tab {
+      flex: 1; padding: 10px 0; text-align: center;
+      border-radius: 10px; cursor: pointer; font-size: 0.88rem; font-weight: 600;
+      color: var(--text-muted); border: none; background: none;
+      transition: all 0.2s;
+    }
+    .lang-tab:hover { color: var(--text); }
+    .lang-tab.active {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 2px 10px rgba(99,102,241,0.3);
+    }
+
+    /* ── Textarea ── */
+    .editor-wrap { position: relative; margin-bottom: 16px; }
+    .editor-label {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .editor-stats {
+      font-size: 0.72rem; color: var(--text-muted); font-weight: 400;
+      text-transform: none; letter-spacing: 0;
+    }
+    .code-area {
+      width: 100%; min-height: 200px; resize: vertical;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 14px 16px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.88rem; line-height: 1.6;
+      color: var(--text); outline: none;
+      transition: border-color 0.2s, background 0.3s;
+      tab-size: 2;
+    }
+    .code-area:focus { border-color: var(--accent); }
+    .code-area::placeholder { color: var(--text-muted); opacity: 0.5; }
+    .code-area.output {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      border-style: dashed;
+    }
+
+    /* ── Key Input ── */
+    .key-row {
+      display: flex; gap: 10px; align-items: center; margin-bottom: 16px;
+    }
+    .key-input {
+      flex: 1; padding: 10px 14px;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 0.88rem; color: var(--text);
+      outline: none; transition: border-color 0.2s;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .key-input:focus { border-color: var(--accent); }
+    .key-input::placeholder { color: var(--text-muted); opacity: 0.5; }
+    .key-label {
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ── Action Grid ── */
+    .action-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px; margin-bottom: 24px;
+    }
+    .btn-tool {
+      padding: 12px 10px; border-radius: 12px;
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; border: 1.5px solid var(--border);
+      background: var(--input-bg); color: var(--text);
+      transition: all 0.2s; display: flex; flex-direction: column;
+      align-items: center; gap: 6px;
+    }
+    .btn-tool:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .btn-tool:active { transform: translateY(0); }
+    .btn-tool-icon { font-size: 1.2rem; }
+    .btn-tool-primary {
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 2px 10px rgba(99,102,241,0.3);
+    }
+    .btn-tool-primary:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(99,102,241,0.4); }
+
+    /* ── Utility Buttons Row ── */
+    .util-row {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;
+    }
+    .btn-util {
+      padding: 8px 14px; border-radius: 10px;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      border: 1px solid var(--border); background: var(--input-bg);
+      color: var(--text-muted); transition: all 0.2s;
+    }
+    .btn-util:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-util-accent {
+      background: var(--accent-light); border-color: var(--accent); color: var(--accent);
+    }
+    .btn-util-accent:hover { background: var(--accent); color: #fff; }
+
+    /* ── Section Divider ── */
+    .section-divider {
+      margin-top: 28px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;
+    }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--success); color: #fff;
+      padding: 10px 22px; border-radius: 50px;
+      font-size: 0.88rem; font-weight: 600;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s; z-index: 200;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.error { background: var(--danger); }
+
+    /* ── Swap Button ── */
+    .swap-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--accent-light); border: 1.5px solid var(--border);
+      cursor: pointer; font-size: 16px; color: var(--accent);
+      transition: all 0.2s; flex-shrink: 0; margin: 0 auto 16px;
+    }
+    .swap-btn:hover { background: var(--accent); color: #fff; transform: rotate(180deg); }
+
+    /* ── Focus visible ── */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    button:focus:not(:focus-visible),
+    input:focus:not(:focus-visible),
+    textarea:focus:not(:focus-visible) { outline: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .card { padding: 28px 20px; }
+      h1 { font-size: 1.25rem; }
+      .action-grid { grid-template-columns: repeat(3, 1fr); }
+      .btn-tool { padding: 10px 6px; font-size: 0.78rem; }
+      .code-area { min-height: 150px; font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="theme-btn" id="theme-toggle" title="切换主题" aria-label="切换主题">🌙</button>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">🛠️</span>
+    <h1>代码工具箱</h1>
+    <p class="subtitle">压缩 · 格式化 · 加密 · 解密 · 混淆</p>
+  </div>
+
+  <!-- Language Tabs -->
+  <div class="lang-tabs">
+    <button class="lang-tab active" data-lang="js">JavaScript</button>
+    <button class="lang-tab" data-lang="css">CSS</button>
+    <button class="lang-tab" data-lang="html">HTML</button>
+  </div>
+
+  <!-- Input Area -->
+  <div class="editor-wrap">
+    <div class="editor-label">
+      <span>输入代码</span>
+      <span class="editor-stats" id="input-stats">0 字符 · 0 行</span>
+    </div>
+    <textarea class="code-area" id="input-code" placeholder="在此粘贴或输入代码..." spellcheck="false"></textarea>
+  </div>
+
+  <!-- Action Grid -->
+  <div class="action-grid">
+    <button class="btn-tool btn-tool-primary" data-action="format">
+      <span class="btn-tool-icon">✨</span>格式化
+    </button>
+    <button class="btn-tool btn-tool-primary" data-action="minify">
+      <span class="btn-tool-icon">📦</span>压缩
+    </button>
+    <button class="btn-tool" data-action="base64enc">
+      <span class="btn-tool-icon">🔒</span>Base64 编码
+    </button>
+    <button class="btn-tool" data-action="base64dec">
+      <span class="btn-tool-icon">🔓</span>Base64 解码
+    </button>
+    <button class="btn-tool" data-action="xor-enc">
+      <span class="btn-tool-icon">🧬</span>XOR 加密
+    </button>
+    <button class="btn-tool" data-action="xor-dec">
+      <span class="btn-tool-icon">🧬</span>XOR 解密
+    </button>
+    <button class="btn-tool" data-action="urlencode">
+      <span class="btn-tool-icon">🔗</span>URL 编码
+    </button>
+    <button class="btn-tool" data-action="urldecode">
+      <span class="btn-tool-icon">🔗</span>URL 解码
+    </button>
+    <button class="btn-tool" data-action="obfuscate">
+      <span class="btn-tool-icon">👻</span>JS 混淆
+    </button>
+    <button class="btn-tool" data-action="reverse">
+      <span class="btn-tool-icon">🔁</span>反转字符串
+    </button>
+    <button class="btn-tool" data-action="escape">
+      <span class="btn-tool-icon">📝</span>HTML 转义
+    </button>
+    <button class="btn-tool" data-action="unescape">
+      <span class="btn-tool-icon">📝</span>HTML 反转义
+    </button>
+  </div>
+
+  <!-- XOR Key -->
+  <div class="key-row" id="key-row">
+    <span class="key-label">🔑 密钥：</span>
+    <input class="key-input" type="text" id="xor-key" placeholder="输入加密/解密密钥" aria-label="XOR密钥" />
+  </div>
+
+  <!-- Swap Button -->
+  <button class="swap-btn" id="swap-btn" title="交换输入输出">⇅</button>
+
+  <!-- Output Area -->
+  <div class="editor-wrap">
+    <div class="editor-label">
+      <span>输出结果</span>
+      <span class="editor-stats" id="output-stats">0 字符 · 0 行</span>
+    </div>
+    <textarea class="code-area output" id="output-code" placeholder="处理结果将显示在这里..." spellcheck="false"></textarea>
+  </div>
+
+  <!-- Utility Row -->
+  <div class="util-row">
+    <button class="btn-util btn-util-accent" id="copy-btn">📋 复制结果</button>
+    <button class="btn-util" id="download-btn">⬇️ 下载文件</button>
+    <button class="btn-util" id="clear-btn">🗑️ 清空</button>
+    <button class="btn-util" id="sample-btn">📄 加载示例</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ 已复制到剪贴板</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+let toastTimer;
+function showToast(msg, isError) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function copyText(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast('✅ 已复制到剪贴板'));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('✅ 已复制到剪贴板');
+  }
+}
+
+// ── Theme ──
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+$('theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+$('theme-toggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  $('theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+});
+
+// ── Language Tab ──
+let currentLang = 'js';
+document.querySelectorAll('.lang-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentLang = tab.dataset.lang;
+  });
+});
+
+// ── Stats ──
+function updateStats(textareaId, statsId) {
+  const val = $(textareaId).value;
+  const chars = val.length;
+  const lines = val ? val.split('\n').length : 0;
+  $(statsId).textContent = `${chars.toLocaleString()} 字符 · ${lines} 行`;
+}
+$('input-code').addEventListener('input', () => updateStats('input-code', 'input-stats'));
+$('output-code').addEventListener('input', () => updateStats('output-code', 'output-stats'));
+
+// ── Output Helper ──
+function setOutput(text) {
+  $('output-code').value = text;
+  updateStats('output-code', 'output-stats');
+}
+function getInput() { return $('input-code').value; }
+
+// ══════════════════════════════════════
+// ── Minify / Format Functions ──
+// ══════════════════════════════════════
+
+// -- JS Minify --
+function minifyJS(code) {
+  // Remove single-line comments (but not URLs)
+  let r = code.replace(/\/\/(?![\/\*])(?:(?!\n).)*/g, '');
+  // Remove multi-line comments
+  r = r.replace(/\/\*[\s\S]*?\*\//g, '');
+  // Collapse whitespace
+  r = r.replace(/\s+/g, ' ');
+  r = r.replace(/\s*([{}();,=:<>+\-*/%&|^~!?[\]])\s*/g, '$1');
+  r = r.replace(/;}/g, '}');
+  r = r.trim();
+  return r;
+}
+
+// -- JS Format (Basic) --
+function formatJS(code) {
+  let r = code.trim();
+  // Ensure braces have spaces around keywords
+  r = r.replace(/\s*(if|else|for|while|do|switch|case|return|var|let|const|function|class|try|catch|finally|throw|new|typeof|instanceof|in|of|async|await|yield|import|export|from|default|extends|break|continue)\s*/g, ' $1 ');
+  // Normalize spacing around operators
+  r = r.replace(/\s*([{}();,=:<>+\-*/%&|^~!?[\]])\s*/g, ' $1 ');
+  // Clean extra spaces
+  r = r.replace(/ +/g, ' ');
+  // Re-indent based on braces
+  const lines = r.split('\n');
+  let indent = 0;
+  const result = [];
+  for (const raw of lines) {
+    let line = raw.trim();
+    if (!line) continue;
+    // Decrement before line if it starts with closing }
+    if (line.startsWith('}') || line.startsWith(']') || line.startsWith(')')) {
+      indent = Math.max(0, indent - 1);
+    }
+    result.push('  '.repeat(indent) + line);
+    // Increment after line if it ends with opening {
+    if (line.endsWith('{') || line.endsWith('[') || line.endsWith('(')) {
+      indent++;
+    }
+  }
+  return result.join('\n');
+}
+
+// -- CSS Minify --
+function minifyCSS(code) {
+  let r = code.replace(/\/\*[\s\S]*?\*\//g, '');
+  r = r.replace(/\s+/g, ' ');
+  r = r.replace(/\s*([{}:;,>+~])\s*/g, '$1');
+  r = r.replace(/;\}/g, '}');
+  r = r.trim();
+  return r;
+}
+
+// -- CSS Format --
+function formatCSS(code) {
+  let r = code.replace(/\s*([{}:;,>+~])\s*/g, '$1 ');
+  r = r.replace(/;}/g, ';\n}');
+  // Expand properties
+  r = r.replace(/\{/g, ' {\n  ');
+  r = r.replace(/\}/g, '\n}\n\n');
+  r = r.replace(/;\s*(?=[a-zA-Z])/g, ';\n  ');
+  r = r.replace(/  \n}/g, '\n}');
+  // Clean empty lines
+  r = r.replace(/\n{3,}/g, '\n\n');
+  return r.trim();
+}
+
+// -- HTML Minify --
+function minifyHTML(code) {
+  let r = code.replace(/<!--[\s\S]*?-->/g, '');
+  r = r.replace(/>\s+</g, '><');
+  r = r.replace(/\s+/g, ' ');
+  r = r.trim();
+  return r;
+}
+
+// -- HTML Format --
+function formatHTML(code) {
+  let r = code.replace(/>\s*</g, '>\n<');
+  const lines = r.split('\n');
+  let indent = 0;
+  const result = [];
+  const selfClosing = /^<(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)\b/i;
+  const closing = /^<\//;
+  const opening = /^<[a-zA-Z]/;
+  for (const raw of lines) {
+    let line = raw.trim();
+    if (!line) continue;
+    if (closing.test(line)) indent = Math.max(0, indent - 1);
+    result.push('  '.repeat(indent) + line);
+    if (opening.test(line) && !closing.test(line) && !selfClosing.test(line) && !line.includes('</')) {
+      indent++;
+    }
+  }
+  return result.join('\n');
+}
+
+// ══════════════════════════════════════
+// ── Encrypt / Decrypt ──
+// ══════════════════════════════════════
+
+function xorCipher(text, key) {
+  if (!key) { showToast('⚠️ 请输入密钥', true); return null; }
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const keyBytes = encoder.encode(key);
+  const result = new Uint8Array(data.length);
+  for (let i = 0; i < data.length; i++) {
+    result[i] = data[i] ^ keyBytes[i % keyBytes.length];
+  }
+  // Convert to hex string
+  return Array.from(result).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function xorDecipher(hexStr, key) {
+  if (!key) { showToast('⚠️ 请输入密钥', true); return null; }
+  if (!/^[0-9a-fA-F]*$/.test(hexStr) || hexStr.length % 2 !== 0) {
+    showToast('⚠️ 无效的十六进制密文', true); return null;
+  }
+  const encoder = new TextEncoder();
+  const keyBytes = encoder.encode(key);
+  const data = new Uint8Array(hexStr.length / 2);
+  for (let i = 0; i < data.length; i++) {
+    data[i] = parseInt(hexStr.substr(i * 2, 2), 16);
+  }
+  const result = new Uint8Array(data.length);
+  for (let i = 0; i < data.length; i++) {
+    result[i] = data[i] ^ keyBytes[i % keyBytes.length];
+  }
+  return new TextDecoder().decode(result);
+}
+
+// -- JS Obfuscate (basic) --
+function obfuscateJS(code) {
+  // Encode string literals to hex
+  let r = code;
+  // Simple: wrap entire code in an eval with hex-encoded string
+  const encoder = new TextEncoder();
+  const bytes = encoder.encode(code);
+  const hex = Array.from(bytes).map(b => '\\x' + b.toString(16).padStart(2, '0')).join('');
+  const wrapper = 'eval("' + hex + '")';
+  return wrapper;
+}
+
+// ══════════════════════════════════════
+// ── Action Dispatcher ──
+// ══════════════════════════════════════
+
+document.querySelectorAll('.btn-tool[data-action]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const action = btn.dataset.action;
+    const input = getInput();
+    if (!input.trim()) { showToast('⚠️ 请先输入代码', true); return; }
+
+    let output = '';
+    try {
+      switch (action) {
+        case 'format':
+          if (currentLang === 'js') output = formatJS(input);
+          else if (currentLang === 'css') output = formatCSS(input);
+          else output = formatHTML(input);
+          break;
+        case 'minify':
+          if (currentLang === 'js') output = minifyJS(input);
+          else if (currentLang === 'css') output = minifyCSS(input);
+          else output = minifyHTML(input);
+          break;
+        case 'base64enc':
+          output = btoa(unescape(encodeURIComponent(input)));
+          break;
+        case 'base64dec':
+          try { output = decodeURIComponent(escape(atob(input.trim()))); }
+          catch { showToast('⚠️ 无效的 Base64 字符串', true); return; }
+          break;
+        case 'xor-enc':
+          output = xorCipher(input, $('xor-key').value);
+          if (output === null) return;
+          break;
+        case 'xor-dec':
+          output = xorDecipher(input.trim(), $('xor-key').value);
+          if (output === null) return;
+          break;
+        case 'urlencode':
+          output = encodeURIComponent(input);
+          break;
+        case 'urldecode':
+          try { output = decodeURIComponent(input); }
+          catch { showToast('⚠️ 无效的 URL 编码', true); return; }
+          break;
+        case 'obfuscate':
+          if (currentLang !== 'js') { showToast('⚠️ 混淆仅支持 JavaScript', true); return; }
+          output = obfuscateJS(input);
+          break;
+        case 'reverse':
+          output = input.split('').reverse().join('');
+          break;
+        case 'escape':
+          output = input.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+          break;
+        case 'unescape':
+          const ta = document.createElement('textarea');
+          ta.innerHTML = input;
+          output = ta.value;
+          break;
+      }
+      setOutput(output);
+      // Brief button feedback
+      btn.style.transform = 'scale(0.95)';
+      setTimeout(() => btn.style.transform = '', 150);
+    } catch (e) {
+      showToast('⚠️ 处理出错：' + e.message, true);
+    }
+  });
+});
+
+// ── Utility Buttons ──
+$('copy-btn').addEventListener('click', () => {
+  const val = $('output-code').value;
+  if (!val) { showToast('⚠️ 没有输出内容', true); return; }
+  copyText(val);
+});
+
+$('clear-btn').addEventListener('click', () => {
+  $('input-code').value = '';
+  $('output-code').value = '';
+  updateStats('input-code', 'input-stats');
+  updateStats('output-code', 'output-stats');
+});
+
+$('swap-btn').addEventListener('click', () => {
+  const input = $('input-code').value;
+  const output = $('output-code').value;
+  $('input-code').value = output;
+  $('output-code').value = input;
+  updateStats('input-code', 'input-stats');
+  updateStats('output-code', 'output-stats');
+});
+
+$('download-btn').addEventListener('click', () => {
+  const val = $('output-code').value;
+  if (!val) { showToast('⚠️ 没有输出内容', true); return; }
+  const ext = { js: 'js', css: 'css', html: 'html' }[currentLang] || 'txt';
+  const mime = { js: 'text/javascript', css: 'text/css', html: 'text/html' }[currentLang] || 'text/plain';
+  const blob = new Blob([val], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `output.${ext}`; a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ 文件已下载');
+});
+
+// ── Sample Code ──
+const samples = {
+  js: `// 示例：计算斐波那契数列
+function fibonacci(n) {
+  if (n <= 1) return n;
+  let a = 0, b = 1;
+  for (let i = 2; i <= n; i++) {
+    const temp = a + b;
+    a = b;
+    b = temp;
+  }
+  return b;
+}
+
+// 打印前 10 个斐波那契数
+for (let i = 0; i < 10; i++) {
+  console.log(\`fibonacci(\${i}) = \${fibonacci(i)}\`);
+}`,
+  css: `/* 示例：按钮组件样式 */
+.button-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.45);
+}`,
+  html: `<!-- 示例：登录表单 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+</head>
+<body>
+  <div class="login-card">
+    <h1>欢迎回来</h1>
+    <p class="subtitle">请输入您的账户信息</p>
+    <form action="/login" method="post">
+      <div class="field">
+        <label for="email">邮箱地址</label>
+        <input type="email" id="email" placeholder="your@email.com" required />
+      </div>
+      <div class="field">
+        <label for="password">密码</label>
+        <input type="password" id="password" placeholder="输入密码" required />
+      </div>
+      <button type="submit" class="btn-login">登录</button>
+    </form>
+  </div>
+</body>
+</html>`
+};
+
+$('sample-btn').addEventListener('click', () => {
+  $('input-code').value = samples[currentLang];
+  updateStats('input-code', 'input-stats');
+  showToast('✅ 已加载 ' + currentLang.toUpperCase() + ' 示例代码');
+});
+
+// Init
+updateStats('input-code', 'input-stats');
+updateStats('output-code', 'output-stats');
+</script>
+</body>
+</html>
