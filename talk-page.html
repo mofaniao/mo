@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的说说 - 记录每一刻的想法</title>
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card-bg: #ffffff;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --accent-light: #eef2ff;
+      --danger: #ef4444;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --input-bg: #f9fafb;
+      --toggle-bg: #e5e7eb;
+      --toggle-thumb: #ffffff;
+      --shadow: 0 4px 24px rgba(99,102,241,0.10);
+      --shadow-lg: 0 8px 40px rgba(99,102,241,0.16);
+    }
+    [data-theme="dark"] {
+      --bg: #0f0f1a;
+      --card-bg: #1a1a2e;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: #2d2d4e;
+      --accent: #818cf8;
+      --accent-hover: #6366f1;
+      --accent-light: #1e1e3a;
+      --danger: #f87171;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --input-bg: #0f0f1a;
+      --toggle-bg: #2d2d4e;
+      --toggle-thumb: #818cf8;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 16px 60px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .theme-btn {
+      position: fixed; top: 20px; right: 20px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--card-bg); border: 1.5px solid var(--border);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 20px; box-shadow: var(--shadow);
+      transition: all 0.2s; z-index: 100;
+    }
+    .theme-btn:hover { transform: scale(1.1); box-shadow: var(--shadow-lg); }
+    .card {
+      background: var(--card-bg); border-radius: 20px;
+      box-shadow: var(--shadow-lg); padding: 40px 36px;
+      width: 100%; max-width: 580px; border: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .card-header { text-align: center; margin-bottom: 28px; }
+    .card-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+    h1 {
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle { color: var(--text-muted); font-size: 0.88rem; margin-top: 6px; }
+
+    /* ── Compose Area ── */
+    .compose-area {
+      width: 100%;
+      min-height: 100px;
+      resize: vertical;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text);
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s, background 0.3s;
+    }
+    .compose-area:focus { border-color: var(--accent); }
+    .compose-area::placeholder { color: var(--text-muted); opacity: 0.5; }
+    .compose-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 12px; gap: 12px; flex-wrap: wrap;
+    }
+    .compose-tools {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .tool-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: var(--input-bg);
+      cursor: pointer; font-size: 1rem; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .tool-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .tool-btn.active { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+    .char-count {
+      font-size: 0.72rem; color: var(--text-muted); font-weight: 500;
+    }
+    .char-count.warn { color: var(--warning); }
+    .char-count.over { color: var(--danger); }
+    .btn-publish {
+      padding: 10px 24px; border-radius: 12px;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      color: #fff; box-shadow: 0 4px 16px rgba(99,102,241,0.35);
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-publish:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(99,102,241,0.45); }
+    .btn-publish:active { transform: translateY(0); }
+
+    /* ── Image Preview ── */
+    .image-input-row {
+      display: none; margin-top: 10px; gap: 8px; align-items: center;
+    }
+    .image-input-row.visible { display: flex; }
+    .image-input {
+      flex: 1; padding: 10px 14px;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 0.82rem; color: var(--text);
+      outline: none; font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .image-input:focus { border-color: var(--accent); }
+    .image-input::placeholder { color: var(--text-muted); opacity: 0.5; }
+    .btn-image-confirm {
+      padding: 8px 14px; border-radius: 10px;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      border: 1.5px solid var(--accent); background: var(--accent);
+      color: #fff; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-image-confirm:hover { opacity: 0.9; }
+    .image-preview {
+      margin-top: 10px; display: none;
+      max-width: 100%; border-radius: 12px;
+      overflow: hidden; position: relative;
+    }
+    .image-preview.visible { display: block; }
+    .image-preview img {
+      width: 100%; max-height: 240px;
+      object-fit: cover; border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .image-remove {
+      position: absolute; top: 8px; right: 8px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(0,0,0,0.5); color: #fff; border: none;
+      cursor: pointer; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .image-remove:hover { background: var(--danger); }
+
+    /* ── Mood Picker ── */
+    .mood-picker {
+      display: none; margin-top: 10px; gap: 6px; flex-wrap: wrap; align-items: center;
+    }
+    .mood-picker.visible { display: flex; }
+    .mood-picker-label {
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 600; margin-right: 4px;
+    }
+    .mood-chip {
+      padding: 4px 12px; border-radius: 99px;
+      font-size: 0.78rem; border: 1.5px solid var(--border);
+      background: var(--input-bg); cursor: pointer;
+      transition: all 0.15s; color: var(--text-muted);
+    }
+    .mood-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .mood-chip.active {
+      border-color: var(--accent); background: var(--accent-light); color: var(--accent);
+    }
+
+    /* ── Location ── */
+    .location-row {
+      display: none; margin-top: 10px; gap: 8px; align-items: center;
+    }
+    .location-row.visible { display: flex; }
+    .location-input {
+      flex: 1; padding: 10px 14px;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 0.82rem; color: var(--text);
+      outline: none; font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .location-input:focus { border-color: var(--accent); }
+    .location-input::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+    /* ── Section Divider ── */
+    .section-divider {
+      margin-top: 28px; padding-top: 24px;
+      border-top: 1px dashed var(--border);
+    }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .section-label {
+      font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .section-count {
+      font-size: 0.72rem; color: var(--text-muted); font-weight: 400;
+    }
+
+    /* ── Search ── */
+    .search-bar {
+      display: flex; gap: 8px; margin-bottom: 14px;
+    }
+    .search-input {
+      flex: 1; padding: 10px 14px;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 12px; font-size: 0.85rem; color: var(--text);
+      outline: none; font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .search-input::placeholder { color: var(--text-muted); opacity: 0.5; }
+    .btn-search {
+      padding: 10px 16px; border-radius: 12px;
+      font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      border: 1.5px solid var(--border); background: var(--card-bg);
+      color: var(--text-muted); transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-search:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-clear-search {
+      display: none; padding: 10px 16px; border-radius: 12px;
+      font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      border: 1.5px solid var(--border); background: var(--card-bg);
+      color: var(--danger); transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-clear-search.visible { display: block; }
+    .btn-clear-search:hover { border-color: var(--danger); }
+
+    /* ── Feed ── */
+    .feed {
+      display: flex; flex-direction: column; gap: 16px;
+      max-height: 600px; overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .feed::-webkit-scrollbar { width: 5px; }
+    .feed::-webkit-scrollbar-track { background: transparent; }
+    .feed::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    .post-card {
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      transition: border-color 0.2s;
+      animation: fadeSlideIn 0.3s ease;
+    }
+    .post-card:hover { border-color: var(--accent); }
+    .post-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .post-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: #fff; flex-shrink: 0;
+    }
+    .post-meta { flex: 1; min-width: 0; }
+    .post-author {
+      font-size: 0.88rem; font-weight: 600; color: var(--text);
+    }
+    .post-time {
+      font-size: 0.7rem; color: var(--text-muted);
+    }
+    .post-mood-tag {
+      font-size: 0.68rem; padding: 2px 8px; border-radius: 99px;
+      background: var(--accent-light); color: var(--accent); font-weight: 600;
+    }
+    .post-body {
+      font-size: 0.9rem; line-height: 1.65; color: var(--text);
+      margin-bottom: 10px; word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .post-image {
+      margin-bottom: 10px; border-radius: 12px;
+      overflow: hidden; max-width: 100%;
+    }
+    .post-image img {
+      width: 100%; max-height: 280px;
+      object-fit: cover; cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .post-image img:hover { transform: scale(1.02); }
+    .post-location {
+      font-size: 0.72rem; color: var(--text-muted);
+      margin-bottom: 10px; display: flex; align-items: center; gap: 4px;
+    }
+    .post-footer {
+      display: flex; align-items: center; gap: 16px;
+      padding-top: 10px; border-top: 1px solid var(--border);
+    }
+    .action-btn {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.78rem; color: var(--text-muted);
+      background: none; border: none; cursor: pointer;
+      padding: 4px 8px; border-radius: 8px;
+      transition: all 0.15s;
+    }
+    .action-btn:hover { color: var(--accent); background: var(--accent-light); }
+    .action-btn.liked { color: #ef4444; }
+    .action-btn .count { font-weight: 600; }
+    .post-actions-menu {
+      margin-left: auto;
+    }
+    .post-edit-delete {
+      display: flex; gap: 4px;
+    }
+    .btn-post-action {
+      font-size: 0.72rem; padding: 3px 8px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--card-bg);
+      color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+    }
+    .btn-post-action:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-post-action.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* ── Comments ── */
+    .comments-section {
+      display: none; margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .comments-section.visible { display: block; }
+    .comment-item {
+      display: flex; gap: 8px; margin-bottom: 10px;
+      animation: fadeSlideIn 0.2s ease;
+    }
+    .comment-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--border); display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.7rem; flex-shrink: 0;
+    }
+    .comment-body { flex: 1; min-width: 0; }
+    .comment-author {
+      font-size: 0.75rem; font-weight: 600; color: var(--accent);
+    }
+    .comment-text {
+      font-size: 0.8rem; color: var(--text); line-height: 1.5;
+      word-break: break-word; margin-top: 2px;
+    }
+    .comment-time {
+      font-size: 0.65rem; color: var(--text-muted); margin-top: 2px;
+    }
+    .comment-input-row {
+      display: flex; gap: 8px; margin-top: 8px; align-items: flex-end;
+    }
+    .comment-input {
+      flex: 1; padding: 8px 12px;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 0.8rem; color: var(--text);
+      outline: none; font-family: inherit; resize: none;
+      min-height: 36px; max-height: 80px;
+      transition: border-color 0.2s;
+    }
+    .comment-input:focus { border-color: var(--accent); }
+    .comment-input::placeholder { color: var(--text-muted); opacity: 0.5; }
+    .btn-comment {
+      padding: 8px 14px; border-radius: 10px;
+      font-size: 0.78rem; font-weight: 600; cursor: pointer;
+      border: none; background: var(--accent); color: #fff;
+      transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-comment:hover { opacity: 0.9; }
+
+    /* ── Empty State ── */
+    .empty-state {
+      text-align: center; padding: 40px 16px; color: var(--text-muted);
+    }
+    .empty-icon { font-size: 2.8rem; margin-bottom: 12px; opacity: 0.5; }
+    .empty-text { font-size: 0.88rem; }
+    .empty-sub { font-size: 0.78rem; margin-top: 6px; opacity: 0.7; }
+
+    /* ── Image Modal ── */
+    .img-modal {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85); z-index: 400;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; opacity: 0; pointer-events: none;
+      transition: opacity 0.25s; cursor: zoom-out;
+    }
+    .img-modal.show { opacity: 1; pointer-events: auto; }
+    .img-modal img {
+      max-width: 95%; max-height: 90vh;
+      object-fit: contain; border-radius: 12px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    }
+
+    /* ── Confirm Modal ── */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+    .modal {
+      background: var(--card-bg); border-radius: 20px;
+      padding: 28px 24px; width: 100%; max-width: 380px;
+      box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+      transform: translateY(20px); transition: transform 0.2s;
+    }
+    .modal-overlay.show .modal { transform: translateY(0); }
+    .modal-title {
+      font-size: 1rem; font-weight: 700; margin-bottom: 12px; text-align: center;
+    }
+    .modal-actions {
+      display: flex; gap: 10px; margin-top: 16px;
+    }
+    .modal-btn {
+      flex: 1; padding: 12px; border-radius: 12px;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      border: 1.5px solid var(--border); background: var(--input-bg);
+      color: var(--text); transition: all 0.2s;
+    }
+    .modal-btn:hover { border-color: var(--accent); }
+    .modal-btn.danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+    .modal-btn.danger:hover { opacity: 0.9; }
+
+    /* ── Edit Modal ── */
+    .edit-textarea {
+      width: 100%; min-height: 80px; resize: vertical;
+      background: var(--input-bg); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 12px 14px;
+      font-size: 0.88rem; line-height: 1.6;
+      color: var(--text); outline: none;
+      font-family: inherit; margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+    .edit-textarea:focus { border-color: var(--accent); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--success); color: #fff;
+      padding: 10px 22px; border-radius: 50px;
+      font-size: 0.88rem; font-weight: 600;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s; z-index: 200;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @keyframes fadeSlideIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    button:focus:not(:focus-visible),
+    input:focus:not(:focus-visible),
+    textarea:focus:not(:focus-visible) { outline: none; }
+
+    @media (max-width: 480px) {
+      .card { padding: 28px 20px; }
+      h1 { font-size: 1.25rem; }
+      .compose-footer { flex-direction: column; align-items: stretch; }
+      .compose-tools { justify-content: center; }
+      .btn-publish { width: 100%; text-align: center; }
+      .post-footer { flex-wrap: wrap; gap: 10px; }
+      .feed { max-height: 500px; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="theme-btn" id="theme-toggle" title="切换主题" aria-label="切换主题">🌙</button>
+
+<div class="card">
+  <div class="card-header">
+    <span class="card-icon">💬</span>
+    <h1>我的说说</h1>
+    <p class="subtitle">记录每一刻的想法与感悟</p>
+  </div>
+
+  <!-- Compose -->
+  <textarea class="compose-area" id="compose-area" placeholder="此刻在想什么..." maxlength="2000"></textarea>
+
+  <!-- Image input -->
+  <div class="image-input-row" id="image-input-row">
+    <input class="image-input" id="image-url-input" type="text" placeholder="输入图片URL地址" />
+    <button class="btn-image-confirm" id="btn-image-confirm">确认</button>
+  </div>
+  <div class="image-preview" id="image-preview">
+    <img id="preview-img" src="" alt="预览" />
+    <button class="image-remove" id="image-remove" title="移除图片">✕</button>
+  </div>
+
+  <!-- Mood picker -->
+  <div class="mood-picker" id="mood-picker">
+    <span class="mood-picker-label">心情：</span>
+  </div>
+
+  <!-- Location -->
+  <div class="location-row" id="location-row">
+    <input class="location-input" id="location-input" type="text" placeholder="添加位置（选填）" maxlength="50" />
+  </div>
+
+  <!-- Footer -->
+  <div class="compose-footer">
+    <div class="compose-tools">
+      <button class="tool-btn" id="btn-image" title="添加图片">🖼️</button>
+      <button class="tool-btn" id="btn-mood" title="标记心情">😊</button>
+      <button class="tool-btn" id="btn-location" title="添加位置">📍</button>
+      <span class="char-count" id="char-count">0/2000</span>
+    </div>
+    <button class="btn-publish" id="btn-publish">✨ 发布</button>
+  </div>
+
+  <!-- Feed Section -->
+  <div class="section-divider">
+    <div class="section-header">
+      <span class="section-label">说说动态</span>
+      <span class="section-count" id="post-count"></span>
+    </div>
+    <div class="search-bar">
+      <input class="search-input" id="search-input" type="text" placeholder="搜索说说内容..." />
+      <button class="btn-search" id="btn-search">🔍</button>
+      <button class="btn-clear-search" id="btn-clear-search">✕ 清除</button>
+    </div>
+    <div class="feed" id="feed"></div>
+  </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay" id="modal-delete">
+  <div class="modal">
+    <div class="modal-title">确认删除这条说说吗？</div>
+    <p style="text-align:center;font-size:0.85rem;color:var(--text-muted)">此操作不可撤销</p>
+    <div class="modal-actions">
+      <button class="modal-btn" id="modal-delete-cancel">取消</button>
+      <button class="modal-btn danger" id="modal-delete-confirm">删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal">
+    <div class="modal-title">编辑说说</div>
+    <textarea class="edit-textarea" id="edit-textarea" maxlength="2000"></textarea>
+    <div class="modal-actions">
+      <button class="modal-btn" id="modal-edit-cancel">取消</button>
+      <button class="modal-btn" id="modal-edit-save" style="background:var(--accent);color:#fff;border-color:var(--accent)">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Image Lightbox -->
+<div class="img-modal" id="img-modal">
+  <img id="lightbox-img" src="" alt="大图" />
+</div>
+
+<div class="toast" id="toast">✅ 已发布</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ── Theme ──
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+$('theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+$('theme-toggle').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  $('theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+});
+
+// ══════════════════════════════════════
+// ── Data ──
+// ══════════════════════════════════════
+
+const MOODS = [
+  { emoji: '😄', name: '开心' },
+  { emoji: '😊', name: '愉快' },
+  { emoji: '😌', name: '平静' },
+  { emoji: '🤔', name: '思考' },
+  { emoji: '😤', name: '生气' },
+  { emoji: '😢', name: '难过' },
+  { emoji: '🤩', name: '兴奋' },
+  { emoji: '😴', name: '困倦' },
+];
+
+const AVATARS = ['🧑', '👩', '👨', '🧒', '🦊', '🐱', '🐶', '🦁'];
+const NICKNAMES = ['我', '本人', '博主', '小编', '大侠', '同学'];
+
+let posts = JSON.parse(localStorage.getItem('moodTalks') || '[]');
+let currentImageUrl = '';
+let selectedMood = null;
+let deleteTargetId = null;
+let editTargetId = null;
+let searchKeyword = '';
+const MAX_POSTS = 500;
+
+// ══════════════════════════════════════
+// ── Char Count ──
+// ══════════════════════════════════════
+
+$('compose-area').addEventListener('input', () => {
+  const len = $('compose-area').value.length;
+  const el = $('char-count');
+  el.textContent = `${len}/2000`;
+  el.className = 'char-count' + (len > 1800 ? (len >= 2000 ? ' over' : ' warn') : '');
+});
+
+// ══════════════════════════════════════
+// ── Tool Buttons ──
+// ══════════════════════════════════════
+
+// Image
+$('btn-image').addEventListener('click', () => {
+  const row = $('image-input-row');
+  const isActive = $('btn-image').classList.contains('active');
+  if (isActive) {
+    row.classList.remove('visible');
+    $('btn-image').classList.remove('active');
+  } else {
+    row.classList.add('visible');
+    $('btn-image').classList.add('active');
+    $('image-url-input').focus();
+  }
+});
+
+$('btn-image-confirm').addEventListener('click', addImage);
+$('image-url-input').addEventListener('keydown', e => { if (e.key === 'Enter') addImage(); });
+
+function addImage() {
+  const url = $('image-url-input').value.trim();
+  if (!url) return;
+  currentImageUrl = url;
+  $('preview-img').src = url;
+  $('image-preview').classList.add('visible');
+  $('image-input-row').classList.remove('visible');
+  $('btn-image').classList.remove('active');
+  $('image-url-input').value = '';
+}
+
+$('image-remove').addEventListener('click', () => {
+  currentImageUrl = '';
+  $('preview-img').src = '';
+  $('image-preview').classList.remove('visible');
+});
+
+// Mood
+$('btn-mood').addEventListener('click', () => {
+  const picker = $('mood-picker');
+  const isActive = $('btn-mood').classList.contains('active');
+  if (isActive) {
+    picker.classList.remove('visible');
+    $('btn-mood').classList.remove('active');
+    selectedMood = null;
+  } else {
+    picker.classList.add('visible');
+    $('btn-mood').classList.add('active');
+  }
+});
+
+// Build mood chips
+(function buildMoodPicker() {
+  const container = $('mood-picker');
+  MOODS.forEach((m, i) => {
+    const chip = document.createElement('button');
+    chip.className = 'mood-chip';
+    chip.dataset.index = i;
+    chip.textContent = m.emoji + ' ' + m.name;
+    container.appendChild(chip);
+  });
+})();
+
+$('mood-picker').addEventListener('click', e => {
+  const chip = e.target.closest('.mood-chip');
+  if (!chip) return;
+  document.querySelectorAll('.mood-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  selectedMood = MOODS[parseInt(chip.dataset.index)];
+});
+
+// Location
+$('btn-location').addEventListener('click', () => {
+  const row = $('location-row');
+  const isActive = $('btn-location').classList.contains('active');
+  if (isActive) {
+    row.classList.remove('visible');
+    $('btn-location').classList.remove('active');
+  } else {
+    row.classList.add('visible');
+    $('btn-location').classList.add('active');
+    $('location-input').focus();
+  }
+});
+
+// ══════════════════════════════════════
+// ── Publish ──
+// ══════════════════════════════════════
+
+$('btn-publish').addEventListener('click', publishPost);
+
+function publishPost() {
+  const content = $('compose-area').value.trim();
+  if (!content) {
+    showToast('⚠️ 请输入内容');
+    $('compose-area').focus();
+    return;
+  }
+
+  const post = {
+    id: Date.now() + Math.random(),
+    content,
+    image: currentImageUrl || '',
+    mood: selectedMood ? { emoji: selectedMood.emoji, name: selectedMood.name } : null,
+    location: $('location-input').value.trim(),
+    avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)],
+    nickname: NICKNAMES[Math.floor(Math.random() * NICKNAMES.length)],
+    date: new Date().toISOString(),
+    likes: 0,
+    liked: false,
+    comments: [],
+  };
+
+  posts.unshift(post);
+  if (posts.length > MAX_POSTS) posts = posts.slice(0, MAX_POSTS);
+  localStorage.setItem('moodTalks', JSON.stringify(posts));
+
+  // Reset form
+  $('compose-area').value = '';
+  $('char-count').textContent = '0/2000';
+  $('char-count').className = 'char-count';
+  currentImageUrl = '';
+  $('preview-img').src = '';
+  $('image-preview').classList.remove('visible');
+  $('image-input-row').classList.remove('visible');
+  $('btn-image').classList.remove('active');
+  $('mood-picker').classList.remove('visible');
+  $('btn-mood').classList.remove('active');
+  selectedMood = null;
+  document.querySelectorAll('.mood-chip').forEach(c => c.classList.remove('active'));
+  $('location-row').classList.remove('visible');
+  $('btn-location').classList.remove('active');
+  $('location-input').value = '';
+
+  renderFeed();
+  showToast('✅ 发布成功');
+}
+
+// ══════════════════════════════════════
+// ── Search ──
+// ══════════════════════════════════════
+
+$('btn-search').addEventListener('click', doSearch);
+$('search-input').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+$('btn-clear-search').addEventListener('click', () => {
+  searchKeyword = '';
+  $('search-input').value = '';
+  $('btn-clear-search').classList.remove('visible');
+  renderFeed();
+});
+
+function doSearch() {
+  searchKeyword = $('search-input').value.trim().toLowerCase();
+  $('btn-clear-search').classList.toggle('visible', searchKeyword.length > 0);
+  renderFeed();
+}
+
+// ══════════════════════════════════════
+// ── Time Format ──
+// ══════════════════════════════════════
+
+function formatTime(isoStr) {
+  const d = new Date(isoStr);
+  const now = new Date();
+  const diff = now - d;
+  const mins = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+
+  if (mins < 1) return '刚刚';
+  if (mins < 60) return `${mins} 分钟前`;
+  if (hours < 24) return `${hours} 小时前`;
+  if (days < 7) return `${days} 天前`;
+
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+// ══════════════════════════════════════
+// ── Render Feed ──
+// ══════════════════════════════════════
+
+function renderFeed() {
+  const feed = $('feed');
+  let filtered = posts;
+  if (searchKeyword) {
+    filtered = posts.filter(p =>
+      p.content.toLowerCase().includes(searchKeyword) ||
+      (p.location && p.location.toLowerCase().includes(searchKeyword)) ||
+      (p.mood && p.mood.name.toLowerCase().includes(searchKeyword))
+    );
+  }
+
+  $('post-count').textContent = posts.length > 0 ? `共 ${posts.length} 条` : '';
+
+  if (filtered.length === 0) {
+    feed.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">${searchKeyword ? '🔍' : '🌟'}</div>
+        <div class="empty-text">${searchKeyword ? '没有找到匹配的说说' : '还没有发布说说'}</div>
+        <div class="empty-sub">${searchKeyword ? '试试其他关键词' : '发布第一条说说吧！'}</div>
+      </div>`;
+    return;
+  }
+
+  feed.innerHTML = filtered.map(p => {
+    const moodTag = p.mood ? `<span class="post-mood-tag">${p.mood.emoji} ${escapeHtml(p.mood.name)}</span>` : '';
+    const image = p.image ? `
+      <div class="post-image">
+        <img src="${escapeHtml(p.image)}" alt="配图" data-img="${encodeURIComponent(p.image)}" loading="lazy" onerror="this.parentElement.style.display='none'" />
+      </div>` : '';
+    const location = p.location ? `<div class="post-location">📍 ${escapeHtml(p.location)}</div>` : '';
+    const commentsHtml = renderComments(p);
+    return `
+      <div class="post-card" data-id="${p.id}">
+        <div class="post-header">
+          <div class="post-avatar">${p.avatar}</div>
+          <div class="post-meta">
+            <div class="post-author">${escapeHtml(p.nickname)} ${moodTag}</div>
+            <div class="post-time">${formatTime(p.date)}</div>
+          </div>
+        </div>
+        <div class="post-body">${escapeHtml(p.content)}</div>
+        ${image}
+        ${location}
+        <div class="post-footer">
+          <button class="action-btn btn-like ${p.liked ? 'liked' : ''}" data-id="${p.id}" title="点赞">
+            ${p.liked ? '❤️' : '🤍'} <span class="count">${p.likes || ''}</span>
+          </button>
+          <button class="action-btn btn-comment-toggle" data-id="${p.id}" title="评论">
+            💬 <span class="count">${p.comments ? p.comments.length : ''}</span>
+          </button>
+          <button class="action-btn btn-copy-post" data-id="${p.id}" title="复制">📋 复制</button>
+          <div class="post-actions-menu">
+            <div class="post-edit-delete">
+              <button class="btn-post-action btn-edit-post" data-id="${p.id}">✏️ 编辑</button>
+              <button class="btn-post-action danger btn-delete-post" data-id="${p.id}">🗑️</button>
+            </div>
+          </div>
+        </div>
+        ${commentsHtml}
+      </div>`;
+  }).join('');
+}
+
+function renderComments(post) {
+  if (!post.comments || post.comments.length === 0) {
+    return `<div class="comments-section" data-post-id="${post.id}">
+      <div class="comment-input-row">
+        <textarea class="comment-input" placeholder="说点什么..." maxlength="500"></textarea>
+        <button class="btn-comment btn-send-comment" data-post-id="${post.id}">发送</button>
+      </div>
+    </div>`;
+  }
+
+  const items = post.comments.map(c => `
+    <div class="comment-item">
+      <div class="comment-avatar">${c.avatar}</div>
+      <div class="comment-body">
+        <div class="comment-author">${escapeHtml(c.nickname)}</div>
+        <div class="comment-text">${escapeHtml(c.text)}</div>
+        <div class="comment-time">${formatTime(c.date)}</div>
+      </div>
+    </div>
+  `).join('');
+
+  return `<div class="comments-section visible" data-post-id="${post.id}">
+    ${items}
+    <div class="comment-input-row">
+      <textarea class="comment-input" placeholder="回复..." maxlength="500"></textarea>
+      <button class="btn-comment btn-send-comment" data-post-id="${post.id}">回复</button>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════
+// ── Feed Event Delegation ──
+// ══════════════════════════════════════
+
+$('feed').addEventListener('click', e => {
+  // Like
+  const likeBtn = e.target.closest('.btn-like');
+  if (likeBtn) {
+    const id = parseFloat(likeBtn.dataset.id);
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+    post.liked = !post.liked;
+    post.likes = post.liked ? (post.likes || 0) + 1 : Math.max(0, (post.likes || 1) - 1);
+    if (!post.liked && post.likes === 0) post.likes = 0;
+    localStorage.setItem('moodTalks', JSON.stringify(posts));
+    renderFeed();
+    return;
+  }
+
+  // Toggle comments
+  const commentToggle = e.target.closest('.btn-comment-toggle');
+  if (commentToggle) {
+    const id = parseFloat(commentToggle.dataset.id);
+    const section = document.querySelector(`.comments-section[data-post-id="${id}"]`);
+    if (section) {
+      section.classList.toggle('visible');
+      if (section.classList.contains('visible')) {
+        const input = section.querySelector('.comment-input');
+        if (input) input.focus();
+      }
+    }
+    return;
+  }
+
+  // Send comment
+  const sendBtn = e.target.closest('.btn-send-comment');
+  if (sendBtn) {
+    const postId = parseFloat(sendBtn.dataset.postId);
+    const section = document.querySelector(`.comments-section[data-post-id="${postId}"]`);
+    const input = section ? section.querySelector('.comment-input') : null;
+    if (!input) return;
+    const text = input.value.trim();
+    if (!text) { showToast('⚠️ 请输入评论内容'); return; }
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+    if (!post.comments) post.comments = [];
+    post.comments.push({
+      text,
+      avatar: AVATARS[Math.floor(Math.random() * AVATARS.length)],
+      nickname: NICKNAMES[Math.floor(Math.random() * NICKNAMES.length)],
+      date: new Date().toISOString(),
+    });
+    localStorage.setItem('moodTalks', JSON.stringify(posts));
+    renderFeed();
+    showToast('💬 评论成功');
+    return;
+  }
+
+  // Copy post
+  const copyBtn = e.target.closest('.btn-copy-post');
+  if (copyBtn) {
+    const id = parseFloat(copyBtn.dataset.id);
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+    copyToClipboard(post.content);
+    showToast('📋 已复制');
+    return;
+  }
+
+  // Edit
+  const editBtn = e.target.closest('.btn-edit-post');
+  if (editBtn) {
+    editTargetId = parseFloat(editBtn.dataset.id);
+    const post = posts.find(p => p.id === editTargetId);
+    if (!post) return;
+    $('edit-textarea').value = post.content;
+    $('modal-edit').classList.add('show');
+    $('edit-textarea').focus();
+    return;
+  }
+
+  // Delete
+  const deleteBtn = e.target.closest('.btn-delete-post');
+  if (deleteBtn) {
+    deleteTargetId = parseFloat(deleteBtn.dataset.id);
+    $('modal-delete').classList.add('show');
+    return;
+  }
+
+  // Click image to open lightbox
+  const img = e.target.closest('.post-image img');
+  if (img) {
+    const src = decodeURIComponent(img.dataset.img);
+    $('lightbox-img').src = src;
+    $('img-modal').classList.add('show');
+    return;
+  }
+});
+
+// ══════════════════════════════════════
+// ── Modals ──
+// ══════════════════════════════════════
+
+// Delete modal
+$('modal-delete-cancel').addEventListener('click', () => {
+  $('modal-delete').classList.remove('show');
+  deleteTargetId = null;
+});
+$('modal-delete').addEventListener('click', e => {
+  if (e.target === $('modal-delete')) {
+    $('modal-delete').classList.remove('show');
+    deleteTargetId = null;
+  }
+});
+$('modal-delete-confirm').addEventListener('click', () => {
+  if (deleteTargetId !== null) {
+    posts = posts.filter(p => p.id !== deleteTargetId);
+    localStorage.setItem('moodTalks', JSON.stringify(posts));
+    $('modal-delete').classList.remove('show');
+    deleteTargetId = null;
+    renderFeed();
+    showToast('🗑️ 已删除');
+  }
+});
+
+// Edit modal
+$('modal-edit-cancel').addEventListener('click', () => {
+  $('modal-edit').classList.remove('show');
+  editTargetId = null;
+});
+$('modal-edit').addEventListener('click', e => {
+  if (e.target === $('modal-edit')) {
+    $('modal-edit').classList.remove('show');
+    editTargetId = null;
+  }
+});
+$('modal-edit-save').addEventListener('click', () => {
+  if (editTargetId === null) return;
+  const newContent = $('edit-textarea').value.trim();
+  if (!newContent) { showToast('⚠️ 内容不能为空'); return; }
+  const post = posts.find(p => p.id === editTargetId);
+  if (post) {
+    post.content = newContent;
+    localStorage.setItem('moodTalks', JSON.stringify(posts));
+    renderFeed();
+    showToast('✅ 已更新');
+  }
+  $('modal-edit').classList.remove('show');
+  editTargetId = null;
+});
+
+// Image lightbox
+$('img-modal').addEventListener('click', () => {
+  $('img-modal').classList.remove('show');
+});
+
+// ══════════════════════════════════════
+// ── Clipboard ──
+// ══════════════════════════════════════
+
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
+// ══════════════════════════════════════
+// ── Init ──
+// ══════════════════════════════════════
+
+renderFeed();
+</script>
+</body>
+</html>
